@@ -5,6 +5,7 @@ import { Route, Routes } from 'react-router-dom';
 import DashboardContent from '../components/Admin/DashboardContent';
 import AppraisalList from '../components/Admin/AppraisalList';
 import ReviewSubmissions from '../components/Admin/ReviewSubmissions';
+import Stats from '../components/Admin/Stats';
 
 const AdminDashboardPage = () => {
   return (
@@ -17,6 +18,7 @@ const AdminDashboardPage = () => {
             <Route path="/" element={<DashboardContent />} />
             <Route path="appraisals" element={<AppraisalList />} />
             <Route path="review" element={<ReviewSubmissions />} />
+            <Route path="faculty-stats" element={<Stats />} />
           </Routes>
         </div>
       </div>

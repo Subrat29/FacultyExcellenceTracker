@@ -17,6 +17,11 @@ const AdminSidebar = () => {
           <UserIcon className="w-5 h-5 mr-3" />
           Appraisals
         </Link>
+        <Link to="/admin-dashboard/faculty-stats" className="flex items-center p-2 hover:bg-gray-700 rounded">
+          <DocumentSearchIcon className="w-5 h-5 mr-3" />
+          Faculty Stats
+        </Link>
+
         {/* Add more navigation links as required */}
       </nav>
     </div>
