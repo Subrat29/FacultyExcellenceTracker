@@ -3,7 +3,7 @@ import Register from '../components/Auth/Register';
 
 const RegisterPage = () => {
   return (
-    <div className="container mx-auto">
+    <div className="">
       <div className="grid grid-cols-1 md:grid-cols-2">
         <div className="hidden md:block">
           <img

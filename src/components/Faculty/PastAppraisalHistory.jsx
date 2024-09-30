@@ -1,17 +1,19 @@
 import React, { useState, useMemo } from 'react';
 import { useTable, useSortBy, useGlobalFilter } from 'react-table';
+import { FaSearch } from 'react-icons/fa';
 
 // GlobalFilter component for search functionality
 const GlobalFilter = ({ filter, setFilter }) => {
   return (
-    <span className="mb-4 block">
+    <div className="mb-4 flex items-center">
+      <FaSearch className="text-gray-400 mr-2" />
       <input
         value={filter || ""}
         onChange={(e) => setFilter(e.target.value)}
-        placeholder="Search..."
-        className="w-full p-2 border border-gray-300 rounded mb-4"
+        placeholder="Search appraisals..."
+        className="w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-300"
       />
-    </span>
+    </div>
   );
 };
 
@@ -55,6 +57,15 @@ const PastAppraisalHistory = () => {
       {
         Header: 'AI Performance Score',
         accessor: 'score',
+        Cell: ({ value }) => (
+          <span
+            className={`px-3 py-1 rounded-full font-bold text-white ${
+              value >= 90 ? 'bg-green-500' : value >= 80 ? 'bg-yellow-500' : 'bg-red-500'
+            }`}
+          >
+            {value}
+          </span>
+        ),
       },
       {
         Header: 'AI Suggestion',
@@ -72,7 +83,12 @@ const PastAppraisalHistory = () => {
         Header: 'Download PDF',
         accessor: 'pdfLink',
         Cell: ({ cell: { value } }) => (
-          <a href={value} className="text-blue-500 hover:underline">Download PDF</a>
+          <a
+            href={value}
+            className="text-blue-600 font-semibold hover:underline hover:text-blue-700 transition"
+          >
+            Download PDF
+          </a>
         ),
       },
     ],
@@ -100,47 +116,48 @@ const PastAppraisalHistory = () => {
   const { globalFilter } = state;
 
   return (
-    <div className="p-6 bg-white rounded-lg shadow">
-      <h2 className="text-2xl font-bold mb-4">Past Appraisal History</h2>
+    <div className="p-6 bg-gradient-to-b from-blue-100 to-purple-100 min-h-screen">
+      <div className="max-w-7xl mx-auto bg-white rounded-lg shadow-lg p-6">
+        <h2 className="text-3xl font-bold text-blue-600 mb-6">Past Appraisal History</h2>
 
-      {/* Search bar */}
-      <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
+        {/* Search bar */}
+        <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
 
-      {/* Table */}
-      <table {...getTableProps()} className="min-w-full table-auto border-collapse border border-gray-300">
-        <thead>
-          {headerGroups.map(headerGroup => (
-            <tr {...headerGroup.getHeaderGroupProps()} className="bg-gray-100">
-              {headerGroup.headers.map(column => (
-                <th
-                  {...column.getHeaderProps(column.getSortByToggleProps())}
-                  className="border p-2 text-left font-medium cursor-pointer"
-                >
-                  {column.render('Header')}
-                  {/* Add a sort indicator */}
-                  <span>
-                    {column.isSorted ? (column.isSortedDesc ? ' 🔽' : ' 🔼') : ''}
-                  </span>
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-          {rows.map(row => {
-            prepareRow(row);
-            return (
-              <tr {...row.getRowProps()} className="hover:bg-gray-50">
-                {row.cells.map(cell => (
-                  <td {...cell.getCellProps()} className="border p-2">
-                    {cell.render('Cell')}
-                  </td>
+        {/* Table */}
+        <table {...getTableProps()} className="min-w-full table-auto border-collapse border border-gray-300 rounded-lg shadow">
+          <thead>
+            {headerGroups.map(headerGroup => (
+              <tr {...headerGroup.getHeaderGroupProps()} className="bg-gray-100">
+                {headerGroup.headers.map(column => (
+                  <th
+                    {...column.getHeaderProps(column.getSortByToggleProps())}
+                    className="border p-4 text-left font-semibold cursor-pointer text-gray-700"
+                  >
+                    {column.render('Header')}
+                    <span>
+                      {column.isSorted ? (column.isSortedDesc ? ' 🔽' : ' 🔼') : ''}
+                    </span>
+                  </th>
                 ))}
               </tr>
-            );
-          })}
-        </tbody>
-      </table>
+            ))}
+          </thead>
+          <tbody {...getTableBodyProps()}>
+            {rows.map(row => {
+              prepareRow(row);
+              return (
+                <tr {...row.getRowProps()} className="hover:bg-gray-50 transition duration-150">
+                  {row.cells.map(cell => (
+                    <td {...cell.getCellProps()} className="border p-4 text-gray-700">
+                      {cell.render('Cell')}
+                    </td>
+                  ))}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import {
   Chart as ChartJS,
   ArcElement,
@@ -11,9 +11,9 @@ import {
   LineElement,
   BarElement
 } from 'chart.js';
-
 import { Pie, Radar, Bar } from 'react-chartjs-2';
 
+// Registering all necessary components in ChartJS
 ChartJS.register(
   ArcElement,
   RadialLinearScale,
@@ -27,21 +27,10 @@ ChartJS.register(
 );
 
 const DetailedAnalysisWithCharts = () => {
-  const barChartRef = useRef(null);
-  const pieChartRef = useRef(null);
-  const radarChartRef = useRef(null);
-
-  useEffect(() => {
-    return () => {
-      if (barChartRef.current) barChartRef.current.destroy();
-      if (pieChartRef.current) pieChartRef.current.destroy();
-      if (radarChartRef.current) radarChartRef.current.destroy();
-    };
-  }, []);
-
   const performanceMetrics = [5, 78, 2, 1, 1, 2, 85];
   const labels = ['Research Publications', 'Teaching Evaluations', 'Conferences', 'Leadership Roles', 'Grants', 'Mentorship', 'Overall AI Score'];
 
+  // Data for Bar Chart
   const barData = {
     labels,
     datasets: [
@@ -53,6 +42,7 @@ const DetailedAnalysisWithCharts = () => {
     ],
   };
 
+  // Data for Pie Chart
   const pieData = {
     labels: ['On Track', 'Below Benchmark', 'Low Participation', 'Potential Growth', 'Needs Improvement', 'Meeting Expectations'],
     datasets: [
@@ -63,6 +53,7 @@ const DetailedAnalysisWithCharts = () => {
     ],
   };
 
+  // Data for Radar Chart
   const radarData = {
     labels,
     datasets: [
@@ -131,59 +122,62 @@ const DetailedAnalysisWithCharts = () => {
   ];
 
   const chartOptions = {
-    maintainAspectRatio: true, // Maintains the aspect ratio but allows size adjustment
-    responsive: true, // Make the chart responsive to window resizing
-    aspectRatio: 2 // Adjusts the size of the chart, lesser values make the chart smaller
+    maintainAspectRatio: true, // Ensures the chart maintains its aspect ratio
+    responsive: true, // Enables responsiveness
+    aspectRatio: 2, // Sets a smaller aspect ratio
   };
 
   return (
-    <div className="bg-white p-6 rounded shadow">
-      <h2 className="text-2xl font-bold mb-6">Detailed Promotion Criteria Analysis</h2>
+    <div className="bg-white p-8 rounded shadow-lg">
+      <h2 className="text-3xl font-bold mb-6">Detailed Promotion Criteria Analysis</h2>
 
-      <div className="overflow-x-auto mb-8">
+      {/* Detailed Analysis Table */}
+      <div className="overflow-x-auto mb-10">
         <table className="min-w-full table-auto border-collapse border border-gray-200">
           <thead className="bg-yellow-300">
             <tr>
-              <th className="border border-gray-300 p-2">Metric</th>
-              <th className="border border-gray-300 p-2">Current Performance</th>
-              <th className="border border-gray-300 p-2">AI Analysis</th>
-              <th className="border border-gray-300 p-2">Improvement Areas</th>
-              <th className="border border-gray-300 p-2">Suggested Actions</th>
+              <th className="border border-gray-300 p-3">Metric</th>
+              <th className="border border-gray-300 p-3">Current Performance</th>
+              <th className="border border-gray-300 p-3">AI Analysis</th>
+              <th className="border border-gray-300 p-3">Improvement Areas</th>
+              <th className="border border-gray-300 p-3">Suggested Actions</th>
             </tr>
           </thead>
           <tbody>
             {analysisData.map((item, index) => (
               <tr key={index} className={index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}>
-                <td className="border border-gray-300 p-2">{item.metric}</td>
-                <td className="border border-gray-300 p-2">{item.currentPerformance}</td>
-                <td className="border border-gray-300 p-2">{item.aiAnalysis}</td>
-                <td className="border border-gray-300 p-2">{item.improvementAreas}</td>
-                <td className="border border-gray-300 p-2">{item.suggestedActions}</td>
+                <td className="border border-gray-300 p-3">{item.metric}</td>
+                <td className="border border-gray-300 p-3">{item.currentPerformance}</td>
+                <td className="border border-gray-300 p-3">{item.aiAnalysis}</td>
+                <td className="border border-gray-300 p-3">{item.improvementAreas}</td>
+                <td className="border border-gray-300 p-3">{item.suggestedActions}</td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
 
-      <div className="bg-white p-4 rounded shadow mb-4">
-        <h3 className="text-xl font-bold mb-4">Visual Performance Metrics</h3>
-        <div style={{ maxWidth: '600px', margin: 'auto' }}>
-          <h4 className="text-lg font-semibold mb-2">Performance Metrics Overview (Bar Chart)</h4>
-          <Bar ref={barChartRef} data={barData} options={chartOptions} />
+      {/* Bar Chart Section */}
+      <div className="bg-gray-50 p-6 rounded-lg mb-8 shadow">
+        <h3 className="text-xl font-semibold mb-4 text-center">Performance Metrics Overview (Bar Chart)</h3>
+        <div className="max-w-lg mx-auto">
+          <Bar data={barData} options={chartOptions} />
         </div>
       </div>
 
-      <div className="bg-white p-4 rounded shadow mb-4">
-        <div style={{ maxWidth: '500px', margin: 'auto' }}>
-          <h4 className="text-lg font-semibold mb-2">AI Analysis Breakdown (Pie Chart)</h4>
-          <Pie ref={pieChartRef} data={pieData} options={chartOptions} />
+      {/* Pie Chart Section */}
+      <div className="bg-gray-50 p-6 rounded-lg mb-8 shadow">
+        <h3 className="text-xl font-semibold mb-4 text-center">AI Analysis Breakdown (Pie Chart)</h3>
+        <div className="max-w-lg mx-auto">
+          <Pie data={pieData} options={chartOptions} />
         </div>
       </div>
 
-      <div className="bg-white p-4 rounded shadow mb-4">
-        <div style={{ maxWidth: '600px', margin: 'auto' }}>
-          <h4 className="text-lg font-semibold mb-2">Faculty Performance Overview (Radar Chart)</h4>
-          <Radar ref={radarChartRef} data={radarData} options={chartOptions} />
+      {/* Radar Chart Section */}
+      <div className="bg-gray-50 p-6 rounded-lg shadow">
+        <h3 className="text-xl font-semibold mb-4 text-center">Faculty Performance Overview (Radar Chart)</h3>
+        <div className="max-w-lg mx-auto">
+          <Radar data={radarData} options={chartOptions} />
         </div>
       </div>
     </div>

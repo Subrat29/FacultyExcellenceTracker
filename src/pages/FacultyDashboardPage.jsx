@@ -9,6 +9,10 @@ import PerformanceChart from '../components/Faculty/PerformanceChart';
 import PastAppraisalHistory from '../components/Faculty/PastAppraisalHistory';
 import DetailedAnalysis from '../components/Faculty/DetailedAnalysis';
 import FacultyLeaderboard from '../components/Faculty/FacultyLeaderboard';
+import CareerPath from '../components/Faculty/CareerPath';
+import CollaborationTools from '../components/Faculty/CollaborationTools';
+import Incentive from '../components/Faculty/Incentive';
+import IntegrationTools from '../components/Faculty/IntegrationTools';
 
 const FacultyDashboardPage = () => {
 
@@ -26,6 +30,10 @@ const FacultyDashboardPage = () => {
             <Route path="/past-appraisals" element={<PastAppraisalHistory />} />
             <Route path="/detailed-analysis" element={<DetailedAnalysis />} />
             <Route path="/leaderboard" element={<FacultyLeaderboard />} />
+            <Route path="/career-path" element={<CareerPath />} />
+            <Route path="/collaboration-tools" element={<CollaborationTools />} />
+            <Route path="/incentives" element={<Incentive />} />
+            <Route path="/integration" element={<IntegrationTools />} />
           </Routes>
         </div>
       </div>

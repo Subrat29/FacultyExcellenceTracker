@@ -1,51 +1,96 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { HomeIcon, DocumentSearchIcon, UserIcon } from '@heroicons/react/outline';
+import {
+  HomeIcon,
+  DocumentSearchIcon,
+  UserIcon,
+  ChartBarIcon,
+  GiftIcon,
+  PuzzleIcon,
+  UsersIcon,
+  BriefcaseIcon,
+  ClockIcon,
+  DocumentIcon,
+  // TrophyIcon
+} from '@heroicons/react/outline';
+
+import { FaTrophy } from 'react-icons/fa';
 
 export default function Sidebar() {
   return (
-    <div className="bg-gray-800 text-white p-4 h-screen">
-      <div className="text-2xl font-bold p-6 border-b border-gray-700">
+    <div className="bg-gray-800 text-white p-6 h-screen">
+      <div className="text-2xl font-bold mb-6 border-b border-gray-700 pb-2">
         Faculty Dashboard
       </div>
-      <ul className='flex-1 px-4 py-6 space-y-4'>
-        <li className="mb-4">
-          <Link to="/faculty-dashboard" className="flex items-center p-2 hover:bg-gray-700 rounded">
-            <HomeIcon className="w-5 h-5 mr-3" />
+      <ul className='flex-1 space-y-4'>
+        <li>
+          <Link to="/faculty-dashboard" className="flex items-center p-3 rounded hover:bg-gray-700 transition duration-200">
+            <HomeIcon className="w-6 h-6 mr-3" />
             Dashboard
           </Link>
         </li>
-        <li className="mb-4">
-          <Link to="/faculty-dashboard/profile" className="hover:text-yellow-300">Profile Management</Link>
+        <li>
+          <Link to="/faculty-dashboard/profile" className="flex items-center p-3 rounded hover:bg-gray-700 transition duration-200">
+            <UserIcon className="w-6 h-6 mr-3" />
+            Profile Management
+          </Link>
         </li>
-        <li className="mb-4">
-          <Link to="/faculty-dashboard/appraisal-form" className="hover:text-yellow-300">Appraisal Form</Link>
+        <li>
+          <Link to="/faculty-dashboard/appraisal-form" className="flex items-center p-3 rounded hover:bg-gray-700 transition duration-200">
+            <DocumentSearchIcon className="w-6 h-6 mr-3" />
+            Appraisal Form
+          </Link>
         </li>
-        <li className="mb-4">
-          <Link to="/faculty-dashboard/performance" className="hover:text-yellow-300">Performance Chart</Link>
+        <li>
+          <Link to="/faculty-dashboard/performance" className="flex items-center p-3 rounded hover:bg-gray-700 transition duration-200">
+            <ChartBarIcon className="w-6 h-6 mr-3" />
+            Performance Chart
+          </Link>
         </li>
-        <li className="mb-4">
-          <Link to="/faculty-dashboard/incentives" className="hover:text-yellow-300">Incentives</Link>
+        <li>
+          <Link to="/faculty-dashboard/incentives" className="flex items-center p-3 rounded hover:bg-gray-700 transition duration-200">
+            <GiftIcon className="w-6 h-6 mr-3" />
+            Incentives
+          </Link>
         </li>
-        <li className="mb-4">
-          <Link to="/faculty-dashboard/integration" className="hover:text-yellow-300">Integration Tools</Link>
+        <li>
+          <Link to="/faculty-dashboard/integration" className="flex items-center p-3 rounded hover:bg-gray-700 transition duration-200">
+            <PuzzleIcon className="w-6 h-6 mr-3" />
+            Integration Tools
+          </Link>
         </li>
-        <li className="mb-4">
-          <Link to="/faculty-dashboard/collaboration" className="hover:text-yellow-300">Collaboration Hub</Link>
+        <li>
+          <Link to="/faculty-dashboard/collaboration-tools" className="flex items-center p-3 rounded hover:bg-gray-700 transition duration-200">
+            <UsersIcon className="w-6 h-6 mr-3" />
+            Collaboration Hub
+          </Link>
         </li>
-        <li className="mb-4">
-          <Link to="/faculty-dashboard/career-path" className="hover:text-yellow-300">Career Path</Link>
+        <li>
+          <Link to="/faculty-dashboard/career-path" className="flex items-center p-3 rounded hover:bg-gray-700 transition duration-200">
+            <BriefcaseIcon className="w-6 h-6 mr-3" />
+            Career Path
+          </Link>
         </li>
-        <li className="mb-4">
-          <Link to="/faculty-dashboard/past-appraisals" className="hover:text-yellow-300">Past Appraisal History</Link>
+        <li>
+          <Link to="/faculty-dashboard/past-appraisals" className="flex items-center p-3 rounded hover:bg-gray-700 transition duration-200">
+            <ClockIcon className="w-6 h-6 mr-3" />
+            Past Appraisal History
+          </Link>
         </li>
-        <li className="mb-4">
-          <Link to="/faculty-dashboard/detailed-analysis" className="hover:text-yellow-300">Detailed Analysis</Link>
+        <li>
+          <Link to="/faculty-dashboard/detailed-analysis" className="flex items-center p-3 rounded hover:bg-gray-700 transition duration-200">
+            <DocumentIcon className="w-6 h-6 mr-3" />
+            Detailed Analysis
+          </Link>
         </li>
-        <li className="mb-4">
-          <Link to="/faculty-dashboard/leaderboard" className="hover:text-yellow-300">Leaderboard</Link>
+        <li>
+          <Link to="/faculty-dashboard/leaderboard" className="flex items-center p-3 rounded hover:bg-gray-700 transition duration-200">
+            {/* <TrophyIcon className="w-6 h-6 mr-3" /> */}
+            <FaTrophy  className="w-6 h-6 mr-3" />
+            Leaderboard
+          </Link>
         </li>
       </ul>
     </div>
-  )
+  );
 }

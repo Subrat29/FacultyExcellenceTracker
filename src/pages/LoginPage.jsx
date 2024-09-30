@@ -3,7 +3,7 @@ import Login from '../components/Auth/Login';
 
 const LoginPage = () => {
   return (
-    <div className="container mx-auto">
+    <div className="">
       <div className="grid grid-cols-1 md:grid-cols-2">
         <div className="hidden md:block">
           <img

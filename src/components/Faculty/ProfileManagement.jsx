@@ -1,89 +1,253 @@
-import React from 'react';
+import React, { useState } from 'react';
+
+// Heatmap colors based on activity intensity (simulated data)
+const activityData = [
+  { day: 'Mon', level: 1 },
+  { day: 'Tue', level: 3 },
+  { day: 'Wed', level: 0 },
+  { day: 'Thu', level: 2 },
+  { day: 'Fri', level: 4 },
+  { day: 'Sat', level: 2 },
+  { day: 'Sun', level: 1 },
+];
 
 const ProfileManagement = () => {
+  const [experienceList, setExperienceList] = useState([
+    { id: 1, experience: 'Assistant Professor, ABC University (2018-2020)' },
+    { id: 2, experience: 'Lecturer, XYZ Institute (2015-2018)' }
+  ]);
+  const [fdpList, setFdpList] = useState([
+    { id: 1, fdp: 'AI & Machine Learning Workshop, 2021' },
+    { id: 2, fdp: 'Faculty Development Program on Data Science, 2022' }
+  ]);
+  const [conferenceList, setConferenceList] = useState([
+    { id: 1, conference: 'International Conference on AI, 2023' },
+    { id: 2, conference: 'National Seminar on Cloud Computing, 2021' }
+  ]);
+  const [journalList, setJournalList] = useState([
+    { id: 1, journal: 'Journal of Computer Science, 2020' },
+    { id: 2, journal: 'International Journal of AI Research, 2022' }
+  ]);
+  const [patentList, setPatentList] = useState([
+    { id: 1, patent: 'Patent on AI-driven Education Platform, 2022' }
+  ]);
+  const [awardList, setAwardList] = useState([
+    { id: 1, award: 'Best Research Paper Award, 2021' },
+    { id: 2, award: 'Distinguished Professor Award, 2023' }
+  ]);
+  const [extraCurricularList, setExtraCurricularList] = useState([
+    { id: 1, activity: 'Member, University Sports Committee' },
+    { id: 2, activity: 'Volunteer, Community Teaching Program' }
+  ]);
+
+  const addNewEntry = (list, setList) => {
+    setList([...list, { id: list.length + 1, value: '' }]);
+  };
+
+  const getActivityColor = (level) => {
+    switch (level) {
+      case 1:
+        return 'bg-green-100';
+      case 2:
+        return 'bg-green-300';
+      case 3:
+        return 'bg-green-500';
+      case 4:
+        return 'bg-green-700';
+      default:
+        return 'bg-gray-200';
+    }
+  };
+
   return (
-    <div className="p-6 bg-white shadow rounded">
-      <h2 className="text-2xl font-bold mb-6">Profile Management</h2>
-      <div className="flex items-center mb-6">
-        <img
-          src="https://via.placeholder.com/150"
-          alt="Profile"
-          className="w-24 h-24 rounded-full border border-gray-300 mr-4"
-        />
-        <div>
-          <h3 className="text-lg font-semibold">Dr. John Doe</h3>
-          <p className="text-gray-600">Professor, Computer Science Department</p>
+    <div className="min-h-screen bg-gradient-to-b from-blue-100 to-green-100 p-6">
+      <div className="max-w-6xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
+        {/* Left Sidebar: Profile Info */}
+        <div className="flex">
+          <div className="w-1/3 bg-gray-100 p-4">
+            <div className="flex items-center mb-6">
+              <img
+                src="https://via.placeholder.com/100"
+                alt="Profile"
+                className="w-24 h-24 rounded-full border border-gray-300 mr-4"
+              />
+              <div>
+                <h3 className="text-lg font-semibold">Dr. John Doe</h3>
+                <p className="text-gray-600">Professor, Computer Science</p>
+                <p className="text-gray-500">Rank: 5</p>
+              </div>
+            </div>
+
+            <button className="w-full bg-blue-500 text-white py-2 rounded-lg mb-6">Edit Profile</button>
+
+            <div className="mb-4">
+              <h4 className="font-semibold text-gray-700">Professional Details</h4>
+              <p className="text-gray-600">Institute: ABC University</p>
+              <p className="text-gray-600">Department: Computer Science</p>
+              <p className="text-gray-600">Date of Joining: Jan 2020</p>
+              <p className="text-gray-600">Employee Code: XYZ123</p>
+            </div>
+
+            <div className="mb-4">
+              <h4 className="font-semibold text-gray-700">Skills</h4>
+              <p className="text-gray-600">React, Python, AI, Machine Learning</p>
+            </div>
+
+            <div className="mb-4">
+              <h4 className="font-semibold text-gray-700">Badges and Certifications</h4>
+              <p className="text-gray-600">Certified AI Practitioner, Data Scientist</p>
+            </div>
+
+            <div className="mt-4">
+              <button className="w-full bg-red-500 text-white py-2 rounded-lg">Logout</button>
+            </div>
+          </div>
+
+          {/* Main Content: Profile Details */}
+          <div className="w-2/3 p-6">
+            <h2 className="text-2xl font-bold mb-4">Profile Overview</h2>
+
+            <div className="grid grid-cols-2 gap-6 mb-6">
+              {/* Points, Projects, Seminars */}
+              <div className="bg-yellow-100 p-4 rounded-lg">
+                <h4 className="text-lg font-semibold">Points</h4>
+                <p className="text-3xl font-bold">250</p>
+              </div>
+              <div className="bg-blue-100 p-4 rounded-lg">
+                <h4 className="text-lg font-semibold">Projects</h4>
+                <p className="text-3xl font-bold">5</p>
+              </div>
+              <div className="bg-purple-100 p-4 rounded-lg">
+                <h4 className="text-lg font-semibold">Seminars</h4>
+                <p className="text-3xl font-bold">3</p>
+              </div>
+              <div className="bg-green-100 p-4 rounded-lg">
+                <h4 className="text-lg font-semibold">Lectures</h4>
+                <p className="text-3xl font-bold">20</p>
+              </div>
+            </div>
+
+            {/* Activity Heatmap */}
+            <div className="bg-gray-50 p-4 rounded-lg mb-6">
+              <h4 className="font-semibold mb-2">Activity</h4>
+              <div className="bg-white p-2 rounded-md">
+                {/* Simulated activity heatmap */}
+                <div className="grid grid-cols-7 gap-1">
+                  {activityData.map((activity, index) => (
+                    <div
+                      key={index}
+                      className={`p-3 ${getActivityColor(activity.level)} text-center rounded`}
+                    >
+                      {activity.day}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Additional Details: Experience, Journals, etc. */}
+            <form>
+              {/* Experience Section */}
+              <div className="mb-4">
+                <h4 className="text-lg font-semibold mb-2">Experience</h4>
+                {experienceList.map((exp, index) => (
+                  <input
+                    key={index}
+                    type="text"
+                    value={exp.experience}
+                    readOnly
+                    className="w-full p-2 border border-gray-300 rounded mb-2"
+                  />
+                ))}
+              </div>
+
+              {/* FDP / Seminars / Workshops Section */}
+              <div className="mb-4">
+                <h4 className="text-lg font-semibold mb-2">FDP / Seminars / Workshops</h4>
+                {fdpList.map((fdp, index) => (
+                  <input
+                    key={index}
+                    type="text"
+                    value={fdp.fdp}
+                    readOnly
+                    className="w-full p-2 border border-gray-300 rounded mb-2"
+                  />
+                ))}
+              </div>
+
+              {/* Conference Section */}
+              <div className="mb-4">
+                <h4 className="text-lg font-semibold mb-2">Conferences</h4>
+                {conferenceList.map((conf, index) => (
+                  <input
+                    key={index}
+                    type="text"
+                    value={conf.conference}
+                    readOnly
+                    className="w-full p-2 border border-gray-300 rounded mb-2"
+                  />
+                ))}
+              </div>
+
+              {/* Journals Section */}
+              <div className="mb-4">
+                <h4 className="text-lg font-semibold mb-2">Journals</h4>
+                {journalList.map((jour, index) => (
+                  <input
+                    key={index}
+                    type="text"
+                    value={jour.journal}
+                    readOnly
+                    className="w-full p-2 border border-gray-300 rounded mb-2"
+                  />
+                ))}
+              </div>
+
+              {/* Patents Section */}
+              <div className="mb-4">
+                <h4 className="text-lg font-semibold mb-2">Patents</h4>
+                {patentList.map((pat, index) => (
+                  <input
+                    key={index}
+                    type="text"
+                    value={pat.patent}
+                    readOnly
+                    className="w-full p-2 border border-gray-300 rounded mb-2"
+                  />
+                ))}
+              </div>
+
+              {/* Awards Section */}
+              <div className="mb-4">
+                <h4 className="text-lg font-semibold mb-2">Awards</h4>
+                {awardList.map((awd, index) => (
+                  <input
+                    key={index}
+                    type="text"
+                    value={awd.award}
+                    readOnly
+                    className="w-full p-2 border border-gray-300 rounded mb-2"
+                  />
+                ))}
+              </div>
+
+              {/* Extracurricular Section */}
+              <div className="mb-4">
+                <h4 className="text-lg font-semibold mb-2">Extracurricular Activities</h4>
+                {extraCurricularList.map((act, index) => (
+                  <input
+                    key={index}
+                    type="text"
+                    value={act.activity}
+                    readOnly
+                    className="w-full p-2 border border-gray-300 rounded mb-2"
+                  />
+                ))}
+              </div>
+            </form>
+          </div>
         </div>
       </div>
-      <form>
-        <input
-          type="text"
-          placeholder="Full Name"
-          className="w-full p-3 border border-gray-300 rounded mb-4"
-        />
-        <input
-          type="email"
-          placeholder="Email"
-          className="w-full p-3 border border-gray-300 rounded mb-4"
-        />
-        <input
-          type="text"
-          placeholder="Designation"
-          className="w-full p-3 border border-gray-300 rounded mb-4"
-        />
-        <input
-          type="text"
-          placeholder="Department"
-          className="w-full p-3 border border-gray-300 rounded mb-4"
-        />
-        <input
-          type="text"
-          placeholder="Contact Number"
-          className="w-full p-3 border border-gray-300 rounded mb-4"
-        />
-        <textarea
-          placeholder="Bio / Description"
-          className="w-full p-3 border border-gray-300 rounded mb-4"
-        />
-
-        {/* Integration Syncs */}
-        <div className="mb-4">
-          <label className="block text-gray-700">Integration with University Systems:</label>
-          <div className="mt-2 space-y-2">
-            <div>
-              <input
-                type="checkbox"
-                name="lmsSync"
-                // checked={profile.lmsSync}
-                // onChange={handleChange}
-              />
-              <span className="ml-2">Sync with LMS</span>
-            </div>
-            <div>
-              <input
-                type="checkbox"
-                name="hrSync"
-                // checked={profile.hrSync}
-                // onChange={handleChange}
-              />
-              <span className="ml-2">Sync with HR</span>
-            </div>
-            <div>
-              <input
-                type="checkbox"
-                name="researchSync"
-                // checked={profile.researchSync}
-                // onChange={handleChange}
-              />
-              <span className="ml-2">Sync with Research Database</span>
-            </div>
-          </div>
-          </div>
-
-        <button className="bg-green-500 text-white p-3 rounded hover:bg-green-600">
-          Save Changes
-        </button>
-      </form>
     </div>
   );
 };

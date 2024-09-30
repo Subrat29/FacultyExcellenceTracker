@@ -76,35 +76,39 @@ const AppraisalList = () => {
       {
         Header: 'Status',
         accessor: 'status',
+        Cell: ({ value }) => (
+          <span
+            className={`px-2 py-1 rounded-full text-sm font-bold ${
+              value === 'Pending'
+                ? 'bg-yellow-100 text-yellow-800'
+                : 'bg-green-100 text-green-800'
+            }`}
+          >
+            {value}
+          </span>
+        ),
       },
       {
         Header: 'PDF',
         accessor: 'pdfLink',
         Cell: ({ value }) => (
           <a href={value} target="_blank" rel="noopener noreferrer">
-            <button className="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 flex items-center space-x-1">
+            <button className="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 flex items-center space-x-1 transition-all">
               <FaDownload />
               <span>Download</span>
             </button>
           </a>
         ),
       },
-      // {
-      //   Header: 'Admin Review',
-      //   accessor: 'adminReview', // New accessor for admin review.
-      //   Cell: ({ row, value }) => (
-      //     <Link to='/admin-dashboard/review'>Review Submission</Link>
-      //   ),
-      // },
       {
         Header: 'Admin Review',
         accessor: 'adminReview',
         Cell: ({ row }) => (
           <textarea
-            value={reviews[row.original.employeeCode] || ''} // Get the review from the state.
+            value={reviews[row.original.employeeCode] || ''}
             placeholder="Enter review..."
-            className="border rounded p-2 w-full"
-            onChange={(e) => handleReviewChange(row.original.employeeCode, e.target.value)} // Handle change event.
+            className="border rounded p-2 w-full bg-gray-50"
+            onChange={(e) => handleReviewChange(row.original.employeeCode, e.target.value)}
           />
         ),
       },
@@ -112,16 +116,16 @@ const AppraisalList = () => {
         Header: 'Final Action',
         accessor: 'finalAction',
         Cell: ({ row }) => (
-          <div className="space-x-2">
+          <div className="flex space-x-2">
             <button
-              className="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600 flex items-center space-x-1"
+              className="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600 flex items-center space-x-1 transition-all"
               onClick={() => handleFinalAction(row.original.employeeCode, 'Approved')}
             >
               <FaCheck />
               <span>Approve</span>
             </button>
             <button
-              className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 flex items-center space-x-1"
+              className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 flex items-center space-x-1 transition-all"
               onClick={() => handleFinalAction(row.original.employeeCode, 'Rejected')}
             >
               <FaTimes />
@@ -139,51 +143,41 @@ const AppraisalList = () => {
     // Add logic here to handle approval or rejection in the backend
   };
 
-// Define the state to store the reviews.
-const [reviews, setReviews] = useState(() =>
-  data.reduce((acc, faculty) => {
-    acc[faculty.employeeCode] = faculty.adminReview || ''; // Initialize with existing data or empty string.
-    return acc;
-  }, {})
-);
+  const [reviews, setReviews] = useState(() =>
+    data.reduce((acc, faculty) => {
+      acc[faculty.employeeCode] = faculty.adminReview || '';
+      return acc;
+    }, {})
+  );
 
-// Function to handle review changes.
-const handleReviewChange = (employeeCode, review) => {
-  // Update the local state with the new review.
-  setReviews((prevReviews) => ({
-    ...prevReviews,
-    [employeeCode]: review, // Update review for specific employee.
-  }));
-};
+  const handleReviewChange = (employeeCode, review) => {
+    setReviews((prevReviews) => ({
+      ...prevReviews,
+      [employeeCode]: review,
+    }));
+  };
 
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow,
-  } = useTable({ columns, data }, useSortBy);
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable(
+    { columns, data },
+    useSortBy
+  );
 
   return (
-    <div className="p-6 bg-gray-100 min-h-screen">
-      <h2 className="text-2xl font-bold mb-4">Faculty Appraisals</h2>
-      <div className="bg-white shadow-lg rounded-lg overflow-hidden">
-        <table {...getTableProps()} className="min-w-full bg-white">
-          <thead>
+    <div className="p-6 bg-gradient-to-b from-blue- to-blue-200 min-h-screen">
+      <h2 className="text-3xl font-bold mb-4 text-center text--600">Faculty Appraisals</h2>
+      <div className="bg-white shadow-xl rounded-lg overflow-hidden p-6">
+        <table {...getTableProps()} className="min-w-full bg-white rounded-lg shadow-lg">
+          <thead className="bg-blue-500 text-white">
             {headerGroups.map((headerGroup) => (
-              <tr {...headerGroup.getHeaderGroupProps()} className="bg-gray-100 border-b">
+              <tr {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column) => (
                   <th
                     {...column.getHeaderProps(column.getSortByToggleProps())}
-                    className="text-left px-4 py-2 text-gray-600 font-medium"
+                    className="text-left px-4 py-3 text-lg font-semibold tracking-wider"
                   >
                     {column.render('Header')}
                     <span>
-                      {column.isSorted
-                        ? column.isSortedDesc
-                          ? ' 🔽'
-                          : ' 🔼'
-                        : ''}
+                      {column.isSorted ? (column.isSortedDesc ? ' 🔽' : ' 🔼') : ''}
                     </span>
                   </th>
                 ))}
@@ -194,9 +188,9 @@ const handleReviewChange = (employeeCode, review) => {
             {rows.map((row) => {
               prepareRow(row);
               return (
-                <tr {...row.getRowProps()} className="border-b hover:bg-gray-50">
+                <tr {...row.getRowProps()} className="border-b hover:bg-gray-50 transition duration-150">
                   {row.cells.map((cell) => (
-                    <td {...cell.getCellProps()} className="px-4 py-2">
+                    <td {...cell.getCellProps()} className="px-4 py-3 text-gray-700">
                       {cell.render('Cell')}
                     </td>
                   ))}
