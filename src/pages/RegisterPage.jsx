@@ -7,7 +7,7 @@ const RegisterPage = () => {
       <div className="grid grid-cols-1 md:grid-cols-2">
         <div className="hidden md:block">
           <img
-            src="/facultyImage.jpeg"
+            src="/facultyimage2.jpeg"
             alt="student"
             className="object-cover w-full h-screen"
           />
