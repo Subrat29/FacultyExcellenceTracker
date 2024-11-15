@@ -18,7 +18,7 @@ import { FaTrophy } from 'react-icons/fa';
 
 export default function Sidebar() {
   return (
-    <div className="bg-gray-800 text-white p-6 h-screen">
+    <div className="bg-gray-800 text-white p-6 h-auto">
       <div className="text-2xl font-bold mb-6 border-b border-gray-700 pb-2">
         Faculty Dashboard
       </div>
