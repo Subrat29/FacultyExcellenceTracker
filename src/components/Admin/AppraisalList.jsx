@@ -2,8 +2,14 @@ import React, { useMemo, useState } from 'react';
 import { useTable, useSortBy } from 'react-table';
 import { FaDownload, FaCheck, FaTimes } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import { FcFeedback } from 'react-icons/fc';
 
 const AppraisalList = () => {
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const [currentReview, setCurrentReview] = useState('');
+  const [currentEmployee, setCurrentEmployee] = useState(null);
+
   const data = useMemo(
     () => [
       {
@@ -101,15 +107,16 @@ const AppraisalList = () => {
         ),
       },
       {
-        Header: 'Admin Review',
-        accessor: 'adminReview',
+        Header: 'Admin Feedback',
+        accessor: 'adminFeedback',
         Cell: ({ row }) => (
-          <textarea
-            value={reviews[row.original.employeeCode] || ''}
-            placeholder="Enter review..."
-            className="border rounded p-2 w-full bg-gray-50"
-            onChange={(e) => handleReviewChange(row.original.employeeCode, e.target.value)}
-          />
+          <button
+            onClick={() => openModal(row.original)}
+            className="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 flex items-center space-x-1 transition-all"
+          >
+            <FcFeedback className="h-6 w-6" />
+            <span>Feedback</span>
+          </button>
         ),
       },
       {
@@ -137,6 +144,24 @@ const AppraisalList = () => {
     ],
     []
   );
+
+  const openModal = (employee)=>{
+    setCurrentEmployee(employee);
+    setCurrentReview(employee.adminReview || '')
+    setModalOpen(true)
+  }
+
+  const closeModal = ()=>{
+    setModalOpen(false);
+    setCurrentEmployee(null);
+    setCurrentReview('');
+  }
+
+  const saveReview = () => {
+    alert(`Review for ${currentEmployee.facultyName}: ${currentReview}`);
+    // Update the review logic (e.g., send to backend)
+    closeModal();
+  };
 
   const handleFinalAction = (employeeCode, action) => {
     alert(`Employee ${employeeCode} has been ${action}.`);
@@ -200,6 +225,33 @@ const AppraisalList = () => {
           </tbody>
         </table>
       </div>
+
+      {modalOpen && (
+        <div className="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-1/3">
+            <h3 className="text-xl font-bold mb-4">Admin Review for {currentEmployee?.facultyName}</h3>
+            <textarea
+              value={currentReview}
+              onChange={(e) => setCurrentReview(e.target.value)}
+              className="w-full h-32 border rounded p-2"
+            />
+            <div className="flex justify-end mt-4 space-x-2">
+              <button
+                onClick={closeModal}
+                className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={saveReview}
+                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+              >
+                Save
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
