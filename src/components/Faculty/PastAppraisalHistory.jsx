@@ -116,7 +116,7 @@ const PastAppraisalHistory = () => {
   const { globalFilter } = state;
 
   return (
-    <div className="p-6 bg-gradient-to-b from-blue-100 to-purple-100 min-h-screen">
+    <div className="min-h-screen">
       <div className="max-w-7xl mx-auto bg-white rounded-lg shadow-lg p-6">
         <h2 className="text-3xl font-bold text-blue-600 mb-6">Past Appraisal History</h2>
 
