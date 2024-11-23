@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const navigate = useNavigate();
-  const [role, setRole] = useState('');
+  const [role, setRole] = useState("");
 
   const handleRoleChange = (e) => {
     setRole(e.target.value);
@@ -12,10 +12,12 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Assuming you have some authentication logic here
-    if (role === 'admin') {
-      navigate('/admin-dashboard'); // Redirect to admin path
-    } else if (role === 'faculty') {
-      navigate('/faculty-dashboard'); // Redirect to faculty path
+    if (role === "admin") {
+      navigate("/admin-dashboard"); // Redirect to admin path
+    } else if (role === "faculty") {
+      navigate("/faculty-dashboard"); // Redirect to faculty path
+    } else if (role === "student") {
+      navigate("/student-dashboard"); // Redirect to faculty path
     }
   };
 
@@ -42,6 +44,7 @@ const Login = () => {
             <option value="">Select Role</option>
             <option value="faculty">Faculty</option>
             <option value="admin">Admin</option>
+            <option value="student">Student</option>
           </select>
 
           <div className="flex items-center justify-between mb-4">

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const AdminHeader = () => {
   return (
@@ -16,7 +16,9 @@ const AdminHeader = () => {
             <option value="French">Tamil</option>
           </select>
         </div>
-        <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Logout</button>
+        <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-red-600">
+          Logout
+        </button>
       </div>
     </div>
   );

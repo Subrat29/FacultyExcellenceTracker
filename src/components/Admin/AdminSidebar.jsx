@@ -1,6 +1,10 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { HomeIcon, DocumentSearchIcon, UserIcon } from '@heroicons/react/outline'; // Importing icons from Heroicons
+import React from "react";
+import { Link } from "react-router-dom";
+import {
+  HomeIcon,
+  DocumentSearchIcon,
+  UserIcon,
+} from "@heroicons/react/outline"; // Importing icons from Heroicons
 
 const AdminSidebar = () => {
   return (
@@ -9,15 +13,33 @@ const AdminSidebar = () => {
         Admin Dashboard
       </div>
       <nav className="flex-1 px-4 py-6 space-y-4">
-        <Link to="/admin-dashboard" className="flex items-center p-2 hover:bg-gray-700 rounded">
+        <Link
+          to="/admin-dashboard"
+          className="flex items-center p-2 hover:bg-gray-700 rounded"
+        >
           <HomeIcon className="w-5 h-5 mr-3" />
           Dashboard
         </Link>
-        <Link to="/admin-dashboard/appraisals" className="flex items-center p-2 hover:bg-gray-700 rounded">
+
+        <Link
+          to="/admin-dashboard/profile"
+          className="flex items-center p-2 hover:bg-gray-700 rounded"
+        >
+          <UserIcon className="w-5 h-5 mr-3" />
+          Profile Management
+        </Link>
+
+        <Link
+          to="/admin-dashboard/appraisals"
+          className="flex items-center p-2 hover:bg-gray-700 rounded"
+        >
           <UserIcon className="w-5 h-5 mr-3" />
           Appraisals
         </Link>
-        <Link to="/admin-dashboard/faculty-stats" className="flex items-center p-2 hover:bg-gray-700 rounded">
+        <Link
+          to="/admin-dashboard/faculty-stats"
+          className="flex items-center p-2 hover:bg-gray-700 rounded"
+        >
           <DocumentSearchIcon className="w-5 h-5 mr-3" />
           Faculty Stats
         </Link>

@@ -1,9 +1,10 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import LoginPage from './pages/LoginPage';
-import RegisterPage from './pages/RegisterPage';
-import FacultyDashboardPage from './pages/FacultyDashboardPage';
-import AdminDashboardPage from './pages/AdminDashboardPage';
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
+import FacultyDashboardPage from "./pages/FacultyDashboardPage";
+import AdminDashboardPage from "./pages/AdminDashboardPage";
+import StudentDashboardPage from "./components/Student/StudentDashboardPage";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/faculty-dashboard/*" element={<FacultyDashboardPage />} />
         <Route path="/admin-dashboard/*" element={<AdminDashboardPage />} />
+        <Route path="/student-dashboard/*" element={<StudentDashboardPage />} />
       </Routes>
     </Router>
   );
