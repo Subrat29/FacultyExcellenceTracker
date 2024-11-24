@@ -1,7 +1,30 @@
 // DashboardPage.js
-import React from 'react';
+import React, { useState } from 'react';
+import toast from 'react-hot-toast';
 
 const DashboardPage = () => {
+  const [modalOpen, setModalOpen] = useState(false)
+  const [email, setEmail] = useState('')
+
+  const openModal = ()=>{
+    setModalOpen(true)
+  }
+
+  const closeModal = ()=>{
+    setModalOpen(false)
+    setEmail('')
+  }
+
+  const addNewFacultyHandler = ()=>{
+    if (!email.trim()) {
+      toast.error('Email is required.');
+      return;
+    }
+    toast.success(`Faculty ${email} added successfully!`);
+    setEmail('')
+    closeModal();
+  }
+  
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
       {/* Welcome Banner */}
@@ -37,7 +60,7 @@ const DashboardPage = () => {
 
       {/* Call-to-Action Buttons */}
       <div className="flex justify-between mt-6">
-        <button className="bg-green-500 text-white p-3 rounded-lg hover:bg-green-600">
+        <button onClick={openModal} className="bg-green-500 text-white p-3 rounded-lg hover:bg-green-600">
           Add New Faculty
         </button>
         <button className="bg-blue-500 text-white p-3 rounded-lg hover:bg-blue-600">
@@ -47,6 +70,29 @@ const DashboardPage = () => {
           Schedule Meeting
         </button>
       </div>
+
+      {modalOpen && (
+        <div className='flex items-center justify-center fixed inset-0 bg-gray-800 bg-opacity-75'>
+          <div className='bg-white w-1/4 shadow p-6 rounded-lg'>
+            <h3 className='text-xl font-bold mb-4'>Add New Faculty</h3>
+            <input
+              type='text'
+              placeholder='Enter the email'
+              value={email}
+              onChange={(e)=>setEmail(e.target.value)}
+              className='border rounded w-full p-1 mb-4'
+            ></input>
+            <div className='space-x-2'>
+            <button className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600" onClick={closeModal}>
+              Cancel
+            </button>
+            <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" onClick={addNewFacultyHandler}>
+              Add Faculty
+            </button>
+          </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
