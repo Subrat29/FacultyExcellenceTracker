@@ -4,7 +4,7 @@ import { HomeIcon, DocumentSearchIcon, UserIcon } from '@heroicons/react/outline
 
 const AdminSidebar = () => {
   return (
-    <div className="h-screen bg-gray-800 text-white w-64 flex flex-col">
+    <div className="h-auto bg-gray-800 text-white w-64 flex flex-col">
       <div className="text-2xl font-bold p-6 border-b border-gray-700">
         Admin Dashboard
       </div>
