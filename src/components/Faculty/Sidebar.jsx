@@ -38,7 +38,7 @@ export default function Sidebar() {
         <li>
           <Link to="/faculty-dashboard/appraisal-form" className="flex items-center p-3 rounded hover:bg-gray-700 transition duration-200">
             <DocumentSearchIcon className="w-6 h-6 mr-3" />
-            Appraisal Form
+            Appraisal
           </Link>
         </li>
         <li>
@@ -69,12 +69,6 @@ export default function Sidebar() {
           <Link to="/faculty-dashboard/career-path" className="flex items-center p-3 rounded hover:bg-gray-700 transition duration-200">
             <BriefcaseIcon className="w-6 h-6 mr-3" />
             Career Path
-          </Link>
-        </li>
-        <li>
-          <Link to="/faculty-dashboard/past-appraisals" className="flex items-center p-3 rounded hover:bg-gray-700 transition duration-200">
-            <ClockIcon className="w-6 h-6 mr-3" />
-            Past Appraisal History
           </Link>
         </li>
         <li>
