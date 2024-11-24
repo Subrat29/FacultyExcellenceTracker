@@ -4,7 +4,7 @@ import { Route, Routes } from "react-router-dom";
 import StudentDashboardContent from "../Student/StudentDashboardContent";
 import Profile from "./Profile";
 import FeedbackForm from "./FeedbackForm";
-import StudentSidebar from "./StudentSideBar";
+import StudentSidebar from "./StudentSidebar"
 
 const StudentDashboardPage = () => {
   return (
