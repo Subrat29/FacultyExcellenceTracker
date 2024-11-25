@@ -5,8 +5,18 @@ const Register = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-orange-100">
       <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-6">Faculty Registration</h2>
+        <h2 className="text-2xl font-bold mb-6">Student Registration</h2>
         <form>
+          <select 
+            defaultValue="student" 
+            disabled 
+            className="w-full p-2 border border-gray-300 rounded mb-4 "
+          >
+            <option value="student">Student</option>
+            <option value="faculty">Faculty</option>
+            <option value="admin">Admin</option>
+          
+          </select>
           <input
             type="text"
             placeholder="Name"
