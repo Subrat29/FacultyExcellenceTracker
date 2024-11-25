@@ -1,7 +1,9 @@
+
 import React, { useState } from 'react';
 import { FaBars } from 'react-icons/fa';
 import AdminSidebarForMobile from './AdminSidebarForMobile';
 import logo from '../../assets/Logo.PNG'
+
 
 const AdminHeader = () => {
   const [openSidebar, setOpenSidebar] = useState(false);
@@ -26,7 +28,9 @@ const AdminHeader = () => {
             <option value="French">Tamil</option>
           </select>
         </div>
-        <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Logout</button>
+        <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-red-600">
+          Logout
+        </button>
       </div>
       <FaBars onClick={toggleSidebar} className='text-2xl sm:hidden' />
 
