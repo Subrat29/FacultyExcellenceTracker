@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { FaBars } from 'react-icons/fa';
 import AdminSidebarForMobile from './AdminSidebarForMobile';
-import logo from '../../assets/Logo.PNG'
+import logo from '../../assets/Logo.png'
 
 
 const AdminHeader = () => {
