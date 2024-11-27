@@ -1,15 +1,5 @@
 import React, { useState } from "react";
 
-// Heatmap colors based on activity intensity (simulated data)
-// const activityData = [
-//   { day: "Mon", level: 1 },
-//   { day: "Tue", level: 3 },
-//   { day: "Wed", level: 0 },
-//   { day: "Thu", level: 2 },
-//   { day: "Fri", level: 4 },
-//   { day: "Sat", level: 2 },
-//   { day: "Sun", level: 1 },
-// ];
 
 const ProfileManagement = () => {
   const [experienceList, setExperienceList] = useState([
@@ -45,18 +35,18 @@ const ProfileManagement = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-100 to-green-100 p-6">
+    <div className="min-h-screen bg-gradient-to-b mt-12 from-blue-100 to-green-100 p-2 lg:p-6">
       <div className="max-w-6xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
         {/* Left Sidebar: Profile Info */}
-        <div className="flex">
-          <div className="w-1/3 bg-gray-100 p-4">
-            <div className="flex items-center mb-6">
+        <div className="flex flex-col lg:flex-row">
+          <div className="w-full lg:w-1/3 bg-gray-100 p-4">
+            <div className="flex flex-col  items-center  mb-6">
               <img
                 src="https://via.placeholder.com/100"
                 alt="Profile"
                 className="w-24 h-24 rounded-full border border-gray-300 mr-4"
               />
-              <div>
+              <div className="text-center ">
                 <h3 className="text-lg font-semibold">Dr. John Doe</h3>
                 <p className="text-gray-600">Professor, Computer Science</p>
                 <p className="text-gray-500">Rank: 5</p>
@@ -77,7 +67,7 @@ const ProfileManagement = () => {
               <p className="text-gray-600">Employee Code: XYZ123</p>
             </div>
 
-            <div className="mt-4">
+            <div className="mt-4 hidden lg:flex">
               <button className="w-full bg-red-500 text-white py-2 rounded-lg">
                 Logout
               </button>
@@ -85,8 +75,8 @@ const ProfileManagement = () => {
           </div>
 
           {/* Main Content: Profile Details */}
-          <div className="w-2/3 p-6">
-            <h2 className="text-2xl font-bold mb-4">Profile Overview</h2>
+          <div className=" w-full lg:w-2/3 p-2 lg:p-6">
+            <h2 className="text-2xl hidden lg:flex font-bold mb-4">Profile Overview</h2>
 
             {/* Additional Details: Experience, Journals, etc. */}
             <form>
