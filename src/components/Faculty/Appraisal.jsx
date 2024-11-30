@@ -39,4 +39,4 @@ const Appraisal = () => {
     );
 };
 
-export default Appraisal;
+export default Appraisal; 
