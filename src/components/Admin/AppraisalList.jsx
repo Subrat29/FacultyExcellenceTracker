@@ -212,8 +212,9 @@ const AppraisalList = () => {
           <tbody {...getTableBodyProps()}>
             {rows.map((row) => {
               prepareRow(row);
+              const { key, ...restRowProps } = row.getRowProps();
               return (
-                <tr {...row.getRowProps()} className="border-b hover:bg-gray-50 transition duration-150">
+                <tr key={key} {...row.getRowProps()} className="border-b hover:bg-gray-50 transition duration-150">
                   {row.cells.map((cell) => (
                     <td {...cell.getCellProps()} className="px-4 py-3 text-gray-700">
                       {cell.render('Cell')}
