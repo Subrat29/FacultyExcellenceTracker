@@ -1,10 +1,12 @@
-
 import React, { useState } from 'react';
 import AdminSidebarForMobile from './AdminSidebarForMobile';
 import logo from '../../assets/Logo.png'
 
-
 const AdminHeader = () => {
+  const [selectedLanguage, setSelectedLanguage] = useState("English");
+    const handleLanguageChange = (e) => {
+    setSelectedLanguage(e.target.value);
+  };
   const [openSidebar, setOpenSidebar] = useState(false);
   return (
     <div className="bg-white shadow-md p-3 sm:p-4 flex items-center justify-between fixed top-0 left-0 w-full z-50 sm:static">
@@ -13,16 +15,18 @@ const AdminHeader = () => {
       <div className=" hidden sm:flex space-x-1">
         <div>
           <select
-            // value={selectedLanguage}
-            // onChange={handleLanguageChange}
-            className="bg-blue-500 text-white py-2 px-4 rounded-md"
+            value={selectedLanguage}
+            onChange={handleLanguageChange}
+            className="bg-white text-gray-700 py-2 px-4 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full sm:w-auto"
           >
             <option value="English">English</option>
-            <option value="Spanish">Hindi</option>
-            <option value="French">Tamil</option>
+            <option value="Hindi">Hindi</option>
+            <option value="Tamil">Tamil</option>
           </select>
         </div>
-        <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-red-600">
+
+        {/* Logout Button */}
+        <button className="bg-red-400 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-all duration-200 w-full sm:w-auto">
           Logout
         </button>
       </div>
