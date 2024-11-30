@@ -1,192 +1,221 @@
 import React, { useState } from "react";
+import { FiEdit2 } from "react-icons/fi"; // For Edit Icons
+import { AiOutlineCamera } from "react-icons/ai"; // For Camera Icon
 
+const AdminProfileManagement = ({ profileData = {} }) => {
+  // Default profile data
+  const {
+    name = "Dr. John Doe",
+    email = "johndoe@example.com",
+    avatar = "https://via.placeholder.com/150",
+    role = "College Admin",
+    collage_name = "Institute of Engineering & Technology",
+    department_name = "Computer Science Engineering",
+  } = profileData;
 
-const AdminProfile = () => {
-  const [experienceList, setExperienceList] = useState([
-    { id: 1, experience: "Assistant Professor, ABC University (2018-2020)" },
-    { id: 2, experience: "Lecturer, XYZ Institute (2015-2018)" },
-  ]);
-  const [fdpList, setFdpList] = useState([
-    { id: 1, fdp: "AI & Machine Learning Workshop, 2021" },
-    { id: 2, fdp: "Faculty Development Program on Data Science, 2022" },
-  ]);
-  const [conferenceList, setConferenceList] = useState([
-    { id: 1, conference: "International Conference on AI, 2023" },
-    { id: 2, conference: "National Seminar on Cloud Computing, 2021" },
-  ]);
-  const [journalList, setJournalList] = useState([
-    { id: 1, journal: "Journal of Computer Science, 2020" },
-    { id: 2, journal: "International Journal of AI Research, 2022" },
-  ]);
-  const [patentList, setPatentList] = useState([
-    { id: 1, patent: "Patent on AI-driven Education Platform, 2022" },
-  ]);
-  const [awardList, setAwardList] = useState([
-    { id: 1, award: "Best Research Paper Award, 2021" },
-    { id: 2, award: "Distinguished Professor Award, 2023" },
-  ]);
-  const [extraCurricularList, setExtraCurricularList] = useState([
-    { id: 1, activity: "Member, University Sports Committee" },
-    { id: 2, activity: "Volunteer, Community Teaching Program" },
-  ]);
+  const [profile, setProfile] = useState({
+    name,
+    email,
+    avatar,
+    role,
+    collage_name,
+    department_name,
+  });
 
-  const addNewEntry = (list, setList) => {
-    setList([...list, { id: list.length + 1, value: "" }]);
+  const [isEditModalOpen, setEditModalOpen] = useState(false);
+
+  // Handle Avatar Change
+  const handleAvatarChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setProfile((prev) => ({ ...prev, avatar: reader.result }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  // Handle Profile Edit Save
+  const handleSaveProfile = (e) => {
+    e.preventDefault();
+    alert("Profile updated successfully!");
+    setEditModalOpen(false);
+  };
+
+  // Handle logout profile
+  const handleLogout = () => {
+    alert("Logging out successfully");
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b   p-2 ">
-      <div className="max-w-6xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
-        {/* Left Sidebar: Profile Info */}
-        <div className="flex flex-col lg:flex-row">
-          <div className="w-full lg:w-1/3 bg-gray-100 p-4">
-            <div className="flex flex-col  items-center  mb-6">
-              <img
-                src="https://via.placeholder.com/100"
-                alt="Profile"
-                className="w-24 h-24 rounded-full border border-gray-300 mr-4"
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-blue-50 to-green-100 p-6">
+      <div className="max-w-4xl w-full bg-white shadow-lg rounded-lg overflow-hidden">
+        {/* Header Section */}
+        <div className="relative bg-gradient-to-r from-blue-600 to-green-600 text-white p-6 text-center">
+          <div className="relative inline-block mx-auto">
+            <img
+              src={profile.avatar}
+              alt="Admin Avatar"
+              className="w-32 h-32 rounded-full mx-auto border-4 border-white shadow-md"
+            />
+            <label
+              htmlFor="avatar-upload"
+              className="absolute bottom-2 right-2 bg-blue-500 text-white p-2 rounded-full shadow-md hover:bg-blue-600 transition-all cursor-pointer"
+            >
+              <AiOutlineCamera size={20} />
+              <input
+                type="file"
+                id="avatar-upload"
+                accept="image/*"
+                className="hidden"
+                onChange={handleAvatarChange}
               />
-              <div className="text-center ">
-                <h3 className="text-lg font-semibold">Dr. John Doe</h3>
-                <p className="text-gray-600">Professor, Computer Science</p>
-                <p className="text-gray-500">Rank: 5</p>
-              </div>
-            </div>
-
-            <button className="w-full bg-blue-500 text-white py-2 rounded-lg mb-6">
-              Edit Profile
-            </button>
-
-            <div className="mb-4">
-              <h4 className="font-semibold text-gray-700">
-                Professional Details
-              </h4>
-              <p className="text-gray-600">Institute: ABC University</p>
-              <p className="text-gray-600">Department: Computer Science</p>
-              <p className="text-gray-600">Date of Joining: Jan 2020</p>
-              <p className="text-gray-600">Employee Code: XYZ123</p>
-            </div>
-
-            <div className="mt-4 hidden lg:flex">
-              <button className="w-full bg-red-500 text-white py-2 rounded-lg">
-                Logout
-              </button>
-            </div>
+            </label>
           </div>
+          <h1 className="text-2xl font-bold mt-4">{profile.name}</h1>
+          <p className="text-lg">{profile.role}</p>
+        </div>
 
-          {/* Main Content: Profile Details */}
-          <div className=" w-full lg:w-2/3 p-2 lg:p-6">
-            <h2 className="text-2xl hidden lg:flex font-bold mb-4">Profile Overview</h2>
+        {/* Profile Details */}
+        <div className="p-6">
+          <h2 className="text-xl font-semibold mb-4 text-gray-700">
+            Profile Details
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <ProfileDetail label="Name" value={profile.name} />
+            <ProfileDetail label="Email" value={profile.email} />
+            <ProfileDetail label="Role" value={profile.role} />
+            <ProfileDetail label="Collage Name" value={profile.collage_name} />
+            <ProfileDetail
+              label="Department Name"
+              value={profile.department_name}
+            />
+          </div>
+        </div>
 
-            {/* Additional Details: Experience, Journals, etc. */}
-            <form>
-              {/* Experience Section */}
-              <div className="mb-4">
-                <h4 className="text-lg font-semibold mb-2">Experience</h4>
-                {experienceList.map((exp, index) => (
-                  <input
-                    key={index}
-                    type="text"
-                    value={exp.experience}
-                    readOnly
-                    className="w-full p-2 border border-gray-300 rounded mb-2"
-                  />
-                ))}
+        {/* Action Buttons */}
+        <div className="p-6 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-between">
+          <button
+            onClick={() => setEditModalOpen(true)}
+            className="bg-blue-500 text-white py-2 px-6 rounded-lg shadow hover:bg-blue-600 transition-all"
+            aria-label="Edit Profile"
+          >
+            <FiEdit2 className="inline mr-2" />
+            Edit Profile
+          </button>
+          <button
+            onClick={handleLogout}
+            className="bg-red-500 text-white py-2 px-6 rounded-lg shadow hover:bg-red-600 transition-all mt-4 sm:mt-0"
+            aria-label="Logout"
+          >
+            Logout
+          </button>
+        </div>
+      </div>
+
+      {/* Edit Profile Modal */}
+      {isEditModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 w-full max-w-lg shadow-lg">
+            <h2 className="text-2xl font-semibold mb-4">Edit Profile</h2>
+            <form onSubmit={handleSaveProfile}>
+              <div className="grid grid-cols-1 gap-4">
+                <InputField
+                  label="Name"
+                  value={profile.name}
+                  onChange={(e) =>
+                    setProfile((prev) => ({
+                      ...prev,
+                      name: e.target.value,
+                    }))
+                  }
+                />
+                <InputField
+                  label="Email"
+                  value={profile.email}
+                  onChange={(e) =>
+                    setProfile((prev) => ({
+                      ...prev,
+                      email: e.target.value,
+                    }))
+                  }
+                />
+                <InputField
+                  label="Role"
+                  value={profile.role}
+                  onChange={(e) =>
+                    setProfile((prev) => ({
+                      ...prev,
+                      role: e.target.value,
+                    }))
+                  }
+                />
+                <InputField
+                  label="Collage Name"
+                  value={profile.collage_name}
+                  onChange={(e) =>
+                    setProfile((prev) => ({
+                      ...prev,
+                      collage_name: e.target.value,
+                    }))
+                  }
+                />
+                <InputField
+                  label="Department Name"
+                  value={profile.department_name}
+                  onChange={(e) =>
+                    setProfile((prev) => ({
+                      ...prev,
+                      department_name: e.target.value,
+                    }))
+                  }
+                />
               </div>
-
-              {/* FDP / Seminars / Workshops Section */}
-              <div className="mb-4">
-                <h4 className="text-lg font-semibold mb-2">
-                  FDP / Seminars / Workshops
-                </h4>
-                {fdpList.map((fdp, index) => (
-                  <input
-                    key={index}
-                    type="text"
-                    value={fdp.fdp}
-                    readOnly
-                    className="w-full p-2 border border-gray-300 rounded mb-2"
-                  />
-                ))}
-              </div>
-
-              {/* Conference Section */}
-              <div className="mb-4">
-                <h4 className="text-lg font-semibold mb-2">Conferences</h4>
-                {conferenceList.map((conf, index) => (
-                  <input
-                    key={index}
-                    type="text"
-                    value={conf.conference}
-                    readOnly
-                    className="w-full p-2 border border-gray-300 rounded mb-2"
-                  />
-                ))}
-              </div>
-
-              {/* Journals Section */}
-              <div className="mb-4">
-                <h4 className="text-lg font-semibold mb-2">Journals</h4>
-                {journalList.map((jour, index) => (
-                  <input
-                    key={index}
-                    type="text"
-                    value={jour.journal}
-                    readOnly
-                    className="w-full p-2 border border-gray-300 rounded mb-2"
-                  />
-                ))}
-              </div>
-
-              {/* Patents Section */}
-              <div className="mb-4">
-                <h4 className="text-lg font-semibold mb-2">Patents</h4>
-                {patentList.map((pat, index) => (
-                  <input
-                    key={index}
-                    type="text"
-                    value={pat.patent}
-                    readOnly
-                    className="w-full p-2 border border-gray-300 rounded mb-2"
-                  />
-                ))}
-              </div>
-
-              {/* Awards Section */}
-              <div className="mb-4">
-                <h4 className="text-lg font-semibold mb-2">Awards</h4>
-                {awardList.map((awd, index) => (
-                  <input
-                    key={index}
-                    type="text"
-                    value={awd.award}
-                    readOnly
-                    className="w-full p-2 border border-gray-300 rounded mb-2"
-                  />
-                ))}
-              </div>
-
-              {/* Extracurricular Section */}
-              <div className="mb-4">
-                <h4 className="text-lg font-semibold mb-2">
-                  Extracurricular Activities
-                </h4>
-                {extraCurricularList.map((act, index) => (
-                  <input
-                    key={index}
-                    type="text"
-                    value={act.activity}
-                    readOnly
-                    className="w-full p-2 border border-gray-300 rounded mb-2"
-                  />
-                ))}
+              <div className="flex justify-end mt-4">
+                <button
+                  type="button"
+                  onClick={() => setEditModalOpen(false)}
+                  className="bg-gray-300 text-gray-700 py-2 px-6 rounded-lg shadow mr-2 hover:bg-gray-400 transition-all"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="bg-blue-500 text-white py-2 px-6 rounded-lg shadow hover:bg-blue-600 transition-all"
+                >
+                  Save
+                </button>
               </div>
             </form>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
 
-export default AdminProfile;
+// Reusable Component for Profile Details
+const ProfileDetail = ({ label, value }) => (
+  <div className="bg-gray-50 p-4 rounded shadow-sm">
+    <h3 className="text-sm font-semibold text-gray-600">{label}:</h3>
+    <p className="text-gray-800">{value}</p>
+  </div>
+);
+
+// Reusable Input Field Component
+const InputField = ({ label, value, onChange }) => (
+  <div>
+    <label className="block text-gray-700 text-sm font-semibold mb-1">
+      {label}
+    </label>
+    <input
+      type="text"
+      value={value}
+      onChange={onChange}
+      className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    />
+  </div>
+);
+
+export default AdminProfileManagement;
