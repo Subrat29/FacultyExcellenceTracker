@@ -30,7 +30,7 @@ const AdminHeader = () => {
         </button>
       </div>
 
-      <button className='px-2 py-1 mr-1 rounded-lg bg-blue-200'>
+      <button className='px-2 py-1 mr-1 sm:hidden rounded-lg bg-blue-200'>
         2024-2024
       </button>
  
