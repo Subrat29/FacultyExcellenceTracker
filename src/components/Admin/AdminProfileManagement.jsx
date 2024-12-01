@@ -8,7 +8,7 @@ const AdminProfileManagement = ({ profileData = {} }) => {
     name = "Dr. John Doe",
     email = "johndoe@example.com",
     avatar = "https://via.placeholder.com/150",
-    role = "College Admin",
+    role = "University Admin",
     collage_name = "Institute of Engineering & Technology",
     department_name = "Computer Science Engineering",
   } = profileData;
@@ -23,6 +23,40 @@ const AdminProfileManagement = ({ profileData = {} }) => {
   });
 
   const [isEditModalOpen, setEditModalOpen] = useState(false);
+
+  // College List
+  const collegeList = [
+    "Agra College, Agra",
+    "B.D.K. Mahavidhyala, Agra",
+    "B. V. R. I., PG College, Bichpuri Agra",
+    "Bhadawar Vidya Mandir P.G. College, Bah, Agra",
+    "R.B.S. College, Agra",
+    "Smt. B.D. Jain. Girls P.G. College, Agra",
+    "St. John’s College, Agra",
+    "Narain PG College, Shikohabad, Firozabad",
+    "Paliwal PG College  Shikohabad Firozabad",
+    "A.K.(PG) College, Shikohabad, Firozabad",
+    "B.D.M.M.Girls P.G. College, Shikohabad Firozabad",
+    "C.L .Jain  PG College, Firozabad",
+    "Dau Dayal Mahila PG College, Firozabad",
+    "M.G.B.V. P.G. College, Firozabad",
+    "S. R. K. PG College, Firozabad",
+  ];
+
+  // Department List
+  const departmentList = [
+    "Department of Biotechnology",
+    "Department of Botany",
+    "Department of Chemistry",
+    "Department of Commerce",
+    "Department of Computer Science",
+    "Department of Environmental Science",
+    "Department of Hindi",
+    "Department of History & Culture",
+    "Department of Hotel & Tourism Management",
+    "Department of Instrumentation",
+    "Department of Library & Information Science",
+  ];
 
   // Handle Avatar Change
   const handleAvatarChange = (event) => {
@@ -99,7 +133,6 @@ const AdminProfileManagement = ({ profileData = {} }) => {
           <button
             onClick={() => setEditModalOpen(true)}
             className="bg-blue-500 text-white py-2 px-6 rounded-lg shadow hover:bg-blue-600 transition-all"
-            aria-label="Edit Profile"
           >
             <FiEdit2 className="inline mr-2" />
             Edit Profile
@@ -107,7 +140,6 @@ const AdminProfileManagement = ({ profileData = {} }) => {
           <button
             onClick={handleLogout}
             className="bg-red-500 text-white py-2 px-6 rounded-lg shadow hover:bg-red-600 transition-all mt-4 sm:mt-0"
-            aria-label="Logout"
           >
             Logout
           </button>
@@ -125,34 +157,19 @@ const AdminProfileManagement = ({ profileData = {} }) => {
                   label="Name"
                   value={profile.name}
                   onChange={(e) =>
-                    setProfile((prev) => ({
-                      ...prev,
-                      name: e.target.value,
-                    }))
+                    setProfile((prev) => ({ ...prev, name: e.target.value }))
                   }
                 />
                 <InputField
                   label="Email"
                   value={profile.email}
                   onChange={(e) =>
-                    setProfile((prev) => ({
-                      ...prev,
-                      email: e.target.value,
-                    }))
+                    setProfile((prev) => ({ ...prev, email: e.target.value }))
                   }
                 />
-                <InputField
-                  label="Role"
-                  value={profile.role}
-                  onChange={(e) =>
-                    setProfile((prev) => ({
-                      ...prev,
-                      role: e.target.value,
-                    }))
-                  }
-                />
-                <InputField
-                  label="Collage Name"
+                <DropdownField
+                  label="College Name"
+                  options={collegeList}
                   value={profile.collage_name}
                   onChange={(e) =>
                     setProfile((prev) => ({
@@ -161,8 +178,9 @@ const AdminProfileManagement = ({ profileData = {} }) => {
                     }))
                   }
                 />
-                <InputField
+                <DropdownField
                   label="Department Name"
+                  options={departmentList}
                   value={profile.department_name}
                   onChange={(e) =>
                     setProfile((prev) => ({
@@ -195,7 +213,7 @@ const AdminProfileManagement = ({ profileData = {} }) => {
   );
 };
 
-// Reusable Component for Profile Details
+// Reusable Components
 const ProfileDetail = ({ label, value }) => (
   <div className="bg-gray-50 p-4 rounded shadow-sm">
     <h3 className="text-sm font-semibold text-gray-600">{label}:</h3>
@@ -203,7 +221,6 @@ const ProfileDetail = ({ label, value }) => (
   </div>
 );
 
-// Reusable Input Field Component
 const InputField = ({ label, value, onChange }) => (
   <div>
     <label className="block text-gray-700 text-sm font-semibold mb-1">
@@ -215,6 +232,25 @@ const InputField = ({ label, value, onChange }) => (
       onChange={onChange}
       className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
     />
+  </div>
+);
+
+const DropdownField = ({ label, options, value, onChange }) => (
+  <div>
+    <label className="block text-gray-700 text-sm font-semibold mb-1">
+      {label}
+    </label>
+    <select
+      value={value}
+      onChange={onChange}
+      className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    >
+      {options.map((option, index) => (
+        <option key={index} value={option}>
+          {option}
+        </option>
+      ))}
+    </select>
   </div>
 );
 
