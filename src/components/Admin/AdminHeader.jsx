@@ -29,7 +29,7 @@ const AdminHeader = () => {
           <select
             value={selectedYear}
             onChange={handleYearChange}
-            className="bg-white text-gray-700 py-2 px-4 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full sm:w-auto"
+            className="bg-white text-gray-700 py-2 px-4 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full sm:w-auto mr-1"
           >
             <option value="2023-24">2023-24</option>
             <option value="2022-23">2022-23</option>

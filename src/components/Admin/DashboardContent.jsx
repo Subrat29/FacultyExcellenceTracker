@@ -26,7 +26,7 @@ const DashboardPage = () => {
   }
   
   return (
-    <div className="p-2 sm:p-6 mt-16 sm:mt-0 bg-gray-100 sm:min-h-screen">
+    <div className="p-2 sm:p-6 mt-14 sm:mt-0 bg-gray-100 sm:min-h-screen">
       {/* Welcome Banner */}
       <div className="p-6 bg-blue-500 text-white rounded-lg mb-6">
         <h1 className="text-2xl sm:text-3xl font-bold">Welcome, Admin!</h1>
