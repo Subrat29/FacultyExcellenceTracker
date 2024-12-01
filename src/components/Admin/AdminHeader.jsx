@@ -10,7 +10,7 @@ const AdminHeader = () => {
   const [openSidebar, setOpenSidebar] = useState(false);
   return (
     <div className="bg-white shadow-md p-3 sm:p-4 flex items-center justify-between fixed top-0 left-0 w-full z-50 sm:static">
-      <img className='h-8 ml-1 w-10 sm:hidden' src={logo} alt="" />
+      <img className='h-8 ml-10 w-10 sm:hidden' src={logo} alt="" />
       <h1 className="text-2xl font-bold hidden sm:text-2xl sm:flex">Faculty Excellence Tracker</h1>
       <div className=" hidden sm:flex space-x-1">
         <div>
@@ -24,12 +24,15 @@ const AdminHeader = () => {
             <option value="Tamil">Tamil</option>
           </select>
         </div>
-
         {/* Logout Button */}
         <button className="bg-red-400 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-all duration-200 w-full sm:w-auto">
           Logout
         </button>
       </div>
+
+      <button className='px-2 py-1 mr-1 rounded-lg bg-blue-200'>
+        2024-2024
+      </button>
  
       <div
         className={`fixed top-0 left-0  bg-blue-500 text-white shadow-lg z-50 transform ${
