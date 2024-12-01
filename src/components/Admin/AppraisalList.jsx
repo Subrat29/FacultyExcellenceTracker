@@ -1,11 +1,9 @@
 import React, { useMemo, useState } from 'react';
 import { useTable, useSortBy } from 'react-table';
 import { FaDownload, FaCheck, FaTimes } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
 import { FcFeedback } from 'react-icons/fc';
 
 const AppraisalList = () => {
-
   const [modalOpen, setModalOpen] = useState(false);
   const [currentReview, setCurrentReview] = useState('');
   const [currentEmployee, setCurrentEmployee] = useState(null);
@@ -13,6 +11,7 @@ const AppraisalList = () => {
   const data = useMemo(
     () => [
       {
+        id: 'EMP001',
         employeeCode: 'EMP001',
         facultyName: 'Dr. John Doe',
         department: 'Computer Science',
@@ -25,6 +24,7 @@ const AppraisalList = () => {
         finalAction: 'Approved',
       },
       {
+        id: 'EMP002',
         employeeCode: 'EMP002',
         facultyName: 'Dr. Jane Smith',
         department: 'Mathematics',
@@ -37,6 +37,7 @@ const AppraisalList = () => {
         finalAction: '',
       },
       {
+        id: 'EMP003',
         employeeCode: 'EMP003',
         facultyName: 'Dr. Alice Johnson',
         department: 'Physics',
@@ -47,8 +48,7 @@ const AppraisalList = () => {
         pdfLink: '/pdfs/EMP003.pdf',
         adminReview: '',
         finalAction: '',
-      }
-      // Add more data as needed
+      },
     ],
     []
   );
@@ -58,26 +58,32 @@ const AppraisalList = () => {
       {
         Header: 'Employee Code',
         accessor: 'employeeCode',
+        mobile: true,
       },
       {
         Header: 'Faculty Name',
         accessor: 'facultyName',
+        mobile: true,
       },
       {
         Header: 'Department',
         accessor: 'department',
+        mobile: true,
       },
       {
         Header: 'AI Performance Score',
         accessor: 'performanceScore',
+        mobile: false,
       },
       {
         Header: 'AI Recommendation',
         accessor: 'recommendation',
+        mobile: false,
       },
       {
         Header: 'Submission Date',
         accessor: 'submissionDate',
+        mobile: false,
       },
       {
         Header: 'Status',
@@ -93,6 +99,7 @@ const AppraisalList = () => {
             {value}
           </span>
         ),
+        mobile: true,
       },
       {
         Header: 'PDF',
@@ -105,6 +112,7 @@ const AppraisalList = () => {
             </button>
           </a>
         ),
+        mobile: true,
       },
       {
         Header: 'Admin Feedback',
@@ -118,6 +126,7 @@ const AppraisalList = () => {
             <span>Feedback</span>
           </button>
         ),
+        mobile: true,
       },
       {
         Header: 'Final Action',
@@ -126,126 +135,152 @@ const AppraisalList = () => {
           <div className="flex space-x-2">
             <button
               className="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600 flex items-center space-x-1 transition-all"
-              onClick={() => handleFinalAction(row.original.employeeCode, 'Approved')}
+              onClick={() =>
+                handleFinalAction(row.original.employeeCode, 'Approved')
+              }
             >
               <FaCheck />
               <span>Approve</span>
             </button>
             <button
               className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 flex items-center space-x-1 transition-all"
-              onClick={() => handleFinalAction(row.original.employeeCode, 'Rejected')}
+              onClick={() =>
+                handleFinalAction(row.original.employeeCode, 'Rejected')
+              }
             >
               <FaTimes />
               <span>Reject</span>
             </button>
           </div>
         ),
+        mobile: true,
       },
     ],
     []
   );
 
-  const openModal = (employee)=>{
+  const openModal = (employee) => {
     setCurrentEmployee(employee);
-    setCurrentReview(employee.adminReview || '')
-    setModalOpen(true)
-  }
+    setCurrentReview(employee.adminReview || '');
+    setModalOpen(true);
+  };
 
-  const closeModal = ()=>{
+  const closeModal = () => {
     setModalOpen(false);
     setCurrentEmployee(null);
     setCurrentReview('');
-  }
+  };
 
   const saveReview = () => {
     alert(`Review for ${currentEmployee.facultyName}: ${currentReview}`);
-    // Update the review logic (e.g., send to backend)
     closeModal();
   };
 
   const handleFinalAction = (employeeCode, action) => {
     alert(`Employee ${employeeCode} has been ${action}.`);
-    // Add logic here to handle approval or rejection in the backend
   };
 
-  const [reviews, setReviews] = useState(() =>
-    data.reduce((acc, faculty) => {
-      acc[faculty.employeeCode] = faculty.adminReview || '';
-      return acc;
-    }, {})
-  );
-
-  const handleReviewChange = (employeeCode, review) => {
-    setReviews((prevReviews) => ({
-      ...prevReviews,
-      [employeeCode]: review,
-    }));
-  };
-
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable(
-    { columns, data },
-    useSortBy
-  );
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+    useTable(
+      {
+        columns,
+        data,
+        initialState: {
+          hiddenColumns:
+            window.innerWidth < 768
+              ? columns
+                  .filter((col) => col.mobile === false)
+                  .map((col) => col.accessor)
+              : [],
+        },
+      },
+      useSortBy
+    );
 
   return (
-    <div className="p-6 bg-gradient-to-b from-blue- to-blue-200 min-h-screen">
-      <h2 className="text-3xl font-bold mb-4 text-center text--600">Faculty Appraisals</h2>
-      <div className="bg-white shadow-xl rounded-lg overflow-hidden p-6">
-        <table {...getTableProps()} className="min-w-full bg-white rounded-lg shadow-lg">
-          <thead className="bg-blue-500 text-white">
-            {headerGroups.map((headerGroup) => (
-              <tr {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map((column) => (
-                  <th
-                    {...column.getHeaderProps(column.getSortByToggleProps())}
-                    className="text-left px-4 py-3 text-lg font-semibold tracking-wider"
-                  >
-                    {column.render('Header')}
-                    <span>
-                      {column.isSorted ? (column.isSortedDesc ? ' 🔽' : ' 🔼') : ''}
-                    </span>
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody {...getTableBodyProps()}>
-            {rows.map((row) => {
-              prepareRow(row);
-              const { key, ...restRowProps } = row.getRowProps();
-              return (
-                <tr key={key} {...row.getRowProps()} className="border-b hover:bg-gray-50 transition duration-150">
-                  {row.cells.map((cell) => (
-                    <td {...cell.getCellProps()} className="px-4 py-3 text-gray-700">
-                      {cell.render('Cell')}
-                    </td>
+    <div className="p-4 sm:p-6 bg-gradient-to-b from-blue-100 to-blue-200 min-h-screen">
+      <h2 className="text-2xl mt-12 md:mt-0 sm:text-3xl font-bold mb-4 text-center text-blue-600">
+        Faculty Appraisals
+      </h2>
+      <div className="bg-white shadow-xl rounded-lg overflow-hidden p-4 sm:p-6">
+        {/* Responsive table wrapper with scroll */}
+        <div className="overflow-x-auto">
+          <table
+            {...getTableProps()}
+            className="w-full bg-white rounded-lg shadow-lg"
+          >
+            <thead className="bg-blue-500 text-white">
+              {headerGroups.map((headerGroup) => (
+                <tr
+                  {...headerGroup.getHeaderGroupProps()}
+                  key={headerGroup.getHeaderGroupProps().key}
+                >
+                  {headerGroup.headers.map((column) => (
+                    <th
+                      {...column.getHeaderProps(column.getSortByToggleProps())}
+                      key={column.getHeaderProps().key}
+                      className="text-left px-2 sm:px-4 py-2 sm:py-3 text-sm sm:text-lg font-semibold tracking-wider"
+                    >
+                      {column.render('Header')}
+                      <span>
+                        {column.isSorted
+                          ? column.isSortedDesc
+                            ? ' 🔽'
+                            : ' 🔼'
+                          : ''}
+                      </span>
+                    </th>
                   ))}
                 </tr>
-              );
-            })}
-          </tbody>
-        </table>
+              ))}
+            </thead>
+            <tbody {...getTableBodyProps()}>
+              {rows.map((row) => {
+                prepareRow(row);
+                return (
+                  <tr
+                    {...row.getRowProps()}
+                    key={row.original.id}
+                    className="border-b hover:bg-gray-50 transition duration-150"
+                  >
+                    {row.cells.map((cell) => (
+                      <td
+                        {...cell.getCellProps()}
+                        key={cell.getCellProps().key}
+                        className="px-2 sm:px-4 py-2 sm:py-3 text-gray-700 text-xs sm:text-base"
+                      >
+                        {cell.render('Cell')}
+                      </td>
+                    ))}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       {modalOpen && (
-        <div className="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-1/3">
-            <h3 className="text-xl font-bold mb-4">Admin Review for {currentEmployee?.facultyName}</h3>
+        <div className="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center p-4">
+          <div className="bg-white p-4 sm:p-6 rounded-lg shadow-lg w-full sm:w-2/3 md:w-1/2 lg:w-1/3">
+            <h3 className="text-lg sm:text-xl font-bold mb-4">
+              Admin Review for {currentEmployee?.facultyName}
+            </h3>
             <textarea
               value={currentReview}
               onChange={(e) => setCurrentReview(e.target.value)}
-              className="w-full h-32 border rounded p-2"
+              className="w-full h-24 sm:h-32 border rounded p-2"
             />
             <div className="flex justify-end mt-4 space-x-2">
               <button
                 onClick={closeModal}
-                className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
+                className="bg-gray-500 text-white px-3 sm:px-4 py-2 rounded hover:bg-gray-600 text-sm sm:text-base"
               >
                 Cancel
               </button>
               <button
                 onClick={saveReview}
-                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                className="bg-blue-500 text-white px-3 sm:px-4 py-2 rounded hover:bg-blue-600 text-sm sm:text-base"
               >
                 Save
               </button>
