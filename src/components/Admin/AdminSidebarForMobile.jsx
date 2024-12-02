@@ -20,6 +20,7 @@ const AdminSidebar = () => {
         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
       >
         {isSidebarOpen ? <RxCross2 className='text-red-500 text-2xl ml-48 -mt-1'/> :<FaBars className='text-black -mt-1 text-2xl'/>}
+
       </button>
 
       {/* Sidebar */}
@@ -78,7 +79,7 @@ const AdminSidebar = () => {
         </nav>
         <button
           className="px-4 py-1 mt-20 w-52 mx-4 bg-red-500 hover:bg-red-400 rounded-md"
-          onClick={() => setIsSidebarOpen(false)} // Close sidebar on logout
+          onClick={() => setIsSidebarOpen(false)} 
         >
           Logout
         </button>
