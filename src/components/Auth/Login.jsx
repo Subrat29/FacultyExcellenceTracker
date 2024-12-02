@@ -1,23 +1,64 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { loginSuccess } from '../../store/features/authSlice';
+import axiosInstance from '../../services/admin';
 
 const Login = () => {
   const navigate = useNavigate();
-  const [role, setRole] = useState("");
+  const dispatch = useDispatch(); // Hook to dispatch actions
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [role, setRole] = useState('');
+  const [error, setError] = useState(''); // To handle errors
 
   const handleRoleChange = (e) => {
     setRole(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Assuming you have some authentication logic here
-    if (role === "admin") {
-      navigate("/admin-dashboard"); // Redirect to admin path
-    } else if (role === "faculty") {
-      navigate("/faculty-dashboard"); // Redirect to faculty path
-    } else if (role === "student") {
-      navigate("/student-dashboard"); // Redirect to faculty path
+
+    if (!email || !password || !role) {
+      setError('Please fill all the fields.');
+      return;
+    }
+
+    try {
+      // Assuming you have an API endpoint to authenticate the user
+      const response = await axiosInstance.post('/v1/user/login', {
+        email,
+        password,
+        role,
+      });
+      console.log('Login response: ', response.data);
+
+      const { accessToken, refreshToken, user, roleType } = response.data.data;
+      console.log('User: ', user);
+
+      dispatch(loginSuccess({ accessToken, refreshToken, user, roleType }));
+
+      localStorage.setItem('accessToken', accessToken);
+      localStorage.setItem('roleType', roleType);
+      localStorage.setItem('refreshToken', refreshToken);
+      localStorage.setItem('user', JSON.stringify(user));
+      console.log('Role type: ', roleType);
+
+      document.cookie = `refreshToken=${refreshToken}; path=/; secure; HttpOnly`;
+      document.cookie = `user=${JSON.stringify(
+        user
+      )}; path=/; secure; HttpOnly`;
+
+      if (role === 'admin') {
+        navigate('/admin-dashboard');
+      } else if (role === 'faculty') {
+        navigate('/faculty-dashboard');
+      } else if (role === 'student') {
+        navigate('/student-dashboard');
+      }
+    } catch (error) {
+      console.error('Error logging in: ', error);
+      setError('Invalid email or password.');
     }
   };
 
@@ -25,14 +66,19 @@ const Login = () => {
     <div className="min-h-screen flex items-center justify-center bg-orange-100">
       <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
         <h2 className="text-2xl font-bold mb-6">Login</h2>
+        {error && <div className="text-red-500 mb-4">{error}</div>}
         <form onSubmit={handleSubmit}>
           <input
             type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             placeholder="Email"
             className="w-full p-2 border border-gray-300 rounded mb-4"
           />
           <input
             type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             placeholder="Password"
             className="w-full p-2 border border-gray-300 rounded mb-4"
           />
@@ -57,8 +103,7 @@ const Login = () => {
             </Link>
           </div>
           <button
-            type="button" // Prevents form submission on button click
-            onClick={handleSubmit} // Calls handleSubmit when clicked
+            type="submit" // Submit form on button click
             className="w-full bg-green-500 text-white p-2 rounded hover:bg-green-600"
           >
             Login
