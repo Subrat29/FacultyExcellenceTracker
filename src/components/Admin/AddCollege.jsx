@@ -3,7 +3,7 @@ import React from 'react'
 const AddCollege = () => {
   return (
     <div>
-            <div className='max-w-2xl mx-auto bg-sky-50 p-6 shadow-md rounded-lg'>
+        <div className='max-w-2xl mx-auto bg-sky-50 p-6 shadow-md rounded-lg'>
         <h1 className='text-2xl font-semibold text-center'>Add College</h1>
         <form action="" className='space-y-4'>
             <div>
@@ -11,7 +11,7 @@ const AddCollege = () => {
                 <input 
                     type="text" 
                     placeholder='Enter college name'
-                    className='px-4 py-2 rounded-md w-full mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500'
+                    className='px-4 py-2 border  border-gray-300 rounded-md w-full mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500'
                 />
             </div>
             
@@ -31,7 +31,7 @@ const AddCollege = () => {
                 <input 
                    type="text" 
                    placeholder='Enter the contact number'
-                   className='px-4 py-2 rounded-md w-full mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500'
+                   className='px-4 py-2 border  border-gray-300 rounded-md w-full mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500'
                 />
             </div>
 
@@ -40,7 +40,7 @@ const AddCollege = () => {
                 <input 
                    type="text" 
                    placeholder='Enter email'
-                   className='px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md mt-1 focus:border-blue-500' 
+                   className='px-4 py-2 w-full border  border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md mt-1 focus:border-blue-500' 
                 />
             </div>
 
@@ -49,7 +49,7 @@ const AddCollege = () => {
                 <input 
                    type="text" 
                    placeholder='Enter website'
-                   className='px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md mt-1 focus:border-blue-500' 
+                   className='px-4 py-2 w-full border  border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md mt-1 focus:border-blue-500' 
                 />
             </div>
 
@@ -58,7 +58,7 @@ const AddCollege = () => {
                 <input 
                    type="text" 
                    placeholder='Enter director name'
-                   className='px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md mt-1 focus:border-blue-500' 
+                   className='px-4 py-2 w-full border  border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md mt-1 focus:border-blue-500' 
                 />
             </div>
 

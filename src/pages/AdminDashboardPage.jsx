@@ -9,12 +9,19 @@ import Stats from "../components/Admin/Stats";
 import AdminProfileManagement from "../components/Admin/AdminProfileManagement";
 
 const AdminDashboardPage = () => {
-  return (
-    <div className="flex">
-      <AdminSidebar />
-      <div className="flex-1">
+   return (
+    <div className="flex min-h-screen">
+      {/* Sidebar */}
+      <div className="bg-gray-800 text-white">
+        <AdminSidebar />
+      </div>
+
+      {/* Main Content Area */}
+      <div className="flex-1 overflow-hidden">
         <AdminHeader />
-        <div className="p-4">
+
+        {/* Routes */}
+        <div className="p-4 overflow-x-auto">
           <Routes>
             <Route path="/" element={<DashboardContent />} />
             <Route path="appraisals" element={<AppraisalList />} />

@@ -1,16 +1,18 @@
-import React, { useState } from "react";
-import { FiEdit2 } from "react-icons/fi"; // For Edit Icons
-import { AiOutlineCamera } from "react-icons/ai"; // For Camera Icon
+import React, { useState } from 'react';
+import { FiEdit2 } from 'react-icons/fi'; // For Edit Icons
+import { AiOutlineCamera } from 'react-icons/ai'; // For Camera Icon
+import { useNavigate } from 'react-router-dom';
 
 const AdminProfileManagement = ({ profileData = {} }) => {
+  const navigate = useNavigate();
   // Default profile data
   const {
-    name = "Dr. John Doe",
-    email = "johndoe@example.com",
-    avatar = "https://via.placeholder.com/150",
-    role = "College Admin",
-    collage_name = "Institute of Engineering & Technology",
-    department_name = "Computer Science Engineering",
+    name = 'Dr. John Doe',
+    email = 'johndoe@example.com',
+    avatar = 'https://via.placeholder.com/150',
+    role = 'College Admin',
+    collage_name = 'Institute of Engineering & Technology',
+    department_name = 'Computer Science Engineering',
   } = profileData;
 
   const [profile, setProfile] = useState({
@@ -73,13 +75,25 @@ const AdminProfileManagement = ({ profileData = {} }) => {
   // Handle Profile Edit Save
   const handleSaveProfile = (e) => {
     e.preventDefault();
-    alert("Profile updated successfully!");
+    alert('Profile updated successfully!');
     setEditModalOpen(false);
   };
 
   // Handle logout profile
   const handleLogout = () => {
-    alert("Logging out successfully");
+    // Remove tokens from localStorage
+    console.log('Logout');
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+
+    // Optional: Remove tokens from cookies if they are set there too
+    document.cookie =
+      'accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/';
+    document.cookie =
+      'refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/';
+
+    // Redirect to login page after logout
+    navigate('/login');
   };
 
   return (

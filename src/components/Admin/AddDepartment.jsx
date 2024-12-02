@@ -11,7 +11,7 @@ const AddDepartment = () => {
                 <input 
                     type="text" 
                     placeholder='Enter department name'
-                    className='px-4 py-2 rounded-md w-full mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500'
+                    className='px-4 py-2 border  border-gray-300 rounded-md w-full mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500'
                 />
             </div>
 
@@ -20,7 +20,7 @@ const AddDepartment = () => {
                 <input 
                     type="text" 
                     placeholder='Enter head of department'
-                    className='px-4 py-2 rounded-md w-full mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500'
+                    className='px-4 py-2 border  border-gray-300 rounded-md w-full mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500'
                 />
             </div>
 
