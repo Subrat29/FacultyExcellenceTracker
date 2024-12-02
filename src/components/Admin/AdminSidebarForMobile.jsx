@@ -78,7 +78,7 @@ const AdminSidebar = () => {
         </nav>
         <button
           className="px-4 py-1 mt-20 w-52 mx-4 bg-red-500 hover:bg-red-400 rounded-md"
-          onClick={() => setIsSidebarOpen(false)} // Close sidebar on logout
+          onClick={() => setIsSidebarOpen(false)} 
         >
           Logout
         </button>
