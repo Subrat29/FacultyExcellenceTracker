@@ -4,7 +4,6 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { BookX, Link2Off, WifiOffIcon } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { Card } from '../components/ui/Card';
-import { env } from '../constant';
 
 const ErrorPage = () => {
   const navigate = useNavigate();
@@ -16,14 +15,6 @@ const ErrorPage = () => {
   };
 
   const errorConfig = {
-    INVALID_ADMISSION_URL: {
-      icon: Link2Off,
-      title: 'Invalid Admission Form URL',
-      message:
-        "The admission form URL you're trying to access appears to be incorrect.",
-      supportText:
-        "Please ensure you've copied the complete URL or contact support.",
-    },
     INVALID_URL: {
       icon: Link2Off,
       title: 'Invalid URL',
