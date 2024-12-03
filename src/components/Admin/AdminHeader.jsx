@@ -7,10 +7,18 @@ const AdminHeader = () => {
   const navigate = useNavigate();
 
   const [selectedLanguage, setSelectedLanguage] = useState('English');
+  const [selectedYear, setSelectedYear] = useState("2023-24");
+  const [openSidebar, setOpenSidebar] = useState(false);
+  
+  // handle language change
   const handleLanguageChange = (e) => {
     setSelectedLanguage(e.target.value);
   };
-  const [openSidebar, setOpenSidebar] = useState(false);
+
+  // handle year change   
+  const handleYearChange = (e) => {
+    setSelectedYear(e.target.value);
+  };
 
   const handleLogout = () => {
     // Remove tokens from localStorage
@@ -29,7 +37,6 @@ const AdminHeader = () => {
     // Redirect to login page after logout
     navigate('/');
   };
-
   return (
     <div className="bg-white shadow-md p-3 sm:p-4 flex items-center justify-between fixed top-0 left-0 w-full z-50 sm:static">
       <img className="h-8 ml-1 w-10 sm:hidden" src={logo} alt="" />
@@ -38,7 +45,17 @@ const AdminHeader = () => {
       </h1>
 
       <div className=" hidden sm:flex space-x-1">
-        <div>
+        <div className="flex space-x-1">
+          <select
+            value={selectedYear}
+            onChange={handleYearChange}
+            className="bg-white text-gray-700 py-2 px-4 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full sm:w-auto mr-1"
+          >
+            <option value="2023-24">2023-24</option>
+            <option value="2022-23">2022-23</option>
+            <option value="2021-22">2021-22</option>
+          </select>
+
           <select
             value={selectedLanguage}
             onChange={handleLanguageChange}
@@ -57,9 +74,15 @@ const AdminHeader = () => {
           Logout
         </button>
       </div>
+      
+      <div className="px-3 py-1 text-white font-medium rounded-lg bg-blue-500 shadow-sm sm:hidden">
+
+        2024-2024
+      </div>
+
       <div
         className={`fixed top-0 left-0  bg-blue-500 text-white shadow-lg z-50 transform ${
-          openSidebar ? 'translate-x-0' : '-translate-x-full'
+          openSidebar ? "translate-x-0" : "-translate-x-full"
         } transition-transform duration-300 sm:hidden`}
       >
         <AdminSidebarForMobile />

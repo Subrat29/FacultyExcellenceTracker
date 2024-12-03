@@ -19,7 +19,8 @@ const AdminSidebar = () => {
         className="fixed top-3 z-50 px-4 py-2 rounded sm:hidden"
         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
       >
-        {isSidebarOpen ? <RxCross2 className='text-red-500 text-2xl ml-64 -mt-1'/> :<FaBars className='text-black -mt-1 text-2xl'/>}
+        {isSidebarOpen ? <RxCross2 className='text-red-500 text-2xl ml-48 -mt-1'/> :<FaBars className='text-black -mt-1 text-2xl'/>}
+
       </button>
 
       {/* Sidebar */}
