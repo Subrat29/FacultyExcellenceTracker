@@ -16,10 +16,11 @@ const AdminSidebar = () => {
     <div className="relative h-screen">
       {/* Sidebar Toggle Button (Visible only for small screens) */}
       <button
-        className="fixed top-3 left-64 z-50 px-4 py-2 rounded sm:hidden"
+        className="fixed top-3 z-50 px-4 py-2 rounded sm:hidden"
         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
       >
-        {isSidebarOpen ? <RxCross2 className='text-black text-2xl -mt-1'/> :<FaBars className='text-black -mt-1 text-2xl'/>}
+        {isSidebarOpen ? <RxCross2 className='text-red-500 text-2xl ml-48 -mt-1'/> :<FaBars className='text-black -mt-1 text-2xl'/>}
+
       </button>
 
       {/* Sidebar */}
@@ -78,7 +79,7 @@ const AdminSidebar = () => {
         </nav>
         <button
           className="px-4 py-1 mt-20 w-52 mx-4 bg-red-500 hover:bg-red-400 rounded-md"
-          onClick={() => setIsSidebarOpen(false)} // Close sidebar on logout
+          onClick={() => setIsSidebarOpen(false)} 
         >
           Logout
         </button>
