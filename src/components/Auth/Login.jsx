@@ -3,17 +3,23 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { loginSuccess } from '../../store/features/authSlice';
 import axiosInstance from '../../services/admin';
+import { Eye, EyeOff } from 'lucide-react'; // Import the Lucide eye icons
 
 const Login = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch(); // Hook to dispatch actions
+  const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('');
-  const [error, setError] = useState(''); // To handle errors
+  const [error, setError] = useState('');
+  const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
 
   const handleRoleChange = (e) => {
     setRole(e.target.value);
+  };
+
+  const handlePasswordVisibility = () => {
+    setShowPassword(!showPassword); // Toggle password visibility
   };
 
   const handleSubmit = async (e) => {
@@ -25,7 +31,6 @@ const Login = () => {
     }
 
     try {
-      // Assuming you have an API endpoint to authenticate the user
       const response = await axiosInstance.post('/v1/user/login', {
         email,
         password,
@@ -42,7 +47,6 @@ const Login = () => {
       localStorage.setItem('roleType', roleType);
       localStorage.setItem('refreshToken', refreshToken);
       localStorage.setItem('user', JSON.stringify(user));
-      console.log('Role type: ', roleType);
 
       document.cookie = `refreshToken=${refreshToken}; path=/; secure; HttpOnly`;
       document.cookie = `user=${JSON.stringify(
@@ -75,13 +79,22 @@ const Login = () => {
             placeholder="Email"
             className="w-full p-2 border border-gray-300 rounded mb-4"
           />
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Password"
-            className="w-full p-2 border border-gray-300 rounded mb-4"
-          />
+          <div className="relative mb-4">
+            <input
+              type={showPassword ? 'text' : 'password'} // Toggle password visibility
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Password"
+              className="w-full p-2 border border-gray-300 rounded"
+            />
+            <button
+              type="button"
+              onClick={handlePasswordVisibility}
+              className="absolute top-1/2 right-3 transform -translate-y-1/2"
+            >
+              {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+            </button>
+          </div>
           <select
             value={role}
             onChange={handleRoleChange}
@@ -103,7 +116,7 @@ const Login = () => {
             </Link>
           </div>
           <button
-            type="submit" // Submit form on button click
+            type="submit"
             className="w-full bg-green-500 text-white p-2 rounded hover:bg-green-600"
           >
             Login
