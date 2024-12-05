@@ -41,7 +41,6 @@ function App() {
 
   // Initialize user data in the Redux store from localStorage on app load
   useEffect(() => {
-    // Only load the data if it is not already present in the Redux store
     if (!accessToken && !refreshToken && !user) {
       const storedAccessToken = localStorage.getItem('accessToken');
       const storedRefreshToken = localStorage.getItem('refreshToken');
@@ -140,23 +139,7 @@ const AppRoutes = ({ status, user, role }) => {
         }
       />
       {/* Register Route */}
-      <Route
-        path="/register/*"
-        element={
-          // Use useLocation to check the URL for the token query parameter
-          (() => {
-            const hasToken = new URLSearchParams(location.search).has('token');
-
-            if (hasToken) {
-              // Allow access if token is present
-              return <RegisterPage />;
-            } else {
-              // Redirect to error page if token is missing
-              return <Navigate to="/error" replace />;
-            }
-          })()
-        }
-      />
+      <Route path="/register/*" element={<RegisterPage />} />
       {/* Protected Routes */}
       <Route element={<ProtectedRoute redirectPath="/login" />}>
         <Route
@@ -208,14 +191,19 @@ const LoadingScreen = () => (
 // Authentication Wrapper
 const AuthenticateWrapper = ({ children }) => {
   const { status: authStatus, loading: authLoading } = useAuthenticate();
+  const location = useLocation();
 
-  // If still loading, show the loading screen
+  // Check if the current route is register and has a token
+  const isRegisterRouteWithToken =
+    location.pathname.startsWith('/register') &&
+    new URLSearchParams(location.search).has('token');
+
   if (authLoading) {
     return <LoadingScreen />;
   }
 
-  // If unauthenticated, render the Login page
-  if (authStatus === 'unauthenticated') {
+  // Only redirect to login if it's not the register route with a token
+  if (authStatus === 'unauthenticated' && !isRegisterRouteWithToken) {
     return (
       <Suspense fallback={<LoadingScreen />}>
         <LoginPage />
