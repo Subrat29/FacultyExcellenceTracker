@@ -1,255 +1,94 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import {
+  User, FileText, Telescope, Briefcase, GraduationCap,
+  Award, BookOpen, Medal, Network, Filter, BookmarkIcon, PenLine
+} from 'lucide-react';
+import ProfileHeader from "./Profile/ProfileHeader";
+import OverviewTab from "./Profile/OverviewTab";
+import PersonalInformationTab from "./Profile/PersonalInformationTab";
+import ExperienceTab from "./Profile/ExperienceTab";
+import EducationTab from "./Profile/EducationTab";
+import AwardsTab from "./Profile/AwardsTab";
+import DoctoralThesesGuidedTab from "./Profile/DoctoralThesesGuidedTab";
+import ProfessionalBodiesMembershipTab from "./Profile/ProfessionalBodiesMembershipTab";
+import CommitteeMembershipTab from "./Profile/CommitteeMembershipTab";
+import ResearchProjectsTab from "./Profile/ResearchProjectsTab";
+import IntellectualPropertyTab from "./Profile/IntellectualPropertyTab";
+import PublicationsTab from "./Profile/PublicationsTab";
+import ExpertiseInformationTab from "./Profile/ExpertiseInformationTab";
 
-// Heatmap colors based on activity intensity (simulated data)
-const activityData = [
-  { day: 'Mon', level: 1 },
-  { day: 'Tue', level: 3 },
-  { day: 'Wed', level: 0 },
-  { day: 'Thu', level: 2 },
-  { day: 'Fri', level: 4 },
-  { day: 'Sat', level: 2 },
-  { day: 'Sun', level: 1 },
+const TABS = [
+  { name: "Overview", icon: User, component: OverviewTab },
+  { name: "Personal Information", icon: FileText, component: PersonalInformationTab },
+  { name: "Expertise Information", icon: Telescope, component: ExpertiseInformationTab },
+  { name: "Experience", icon: Briefcase, component: ExperienceTab },
+  { name: "Education Qualification", icon: GraduationCap, component: EducationTab },
+  { name: "Honours and Awards", icon: Award, component: AwardsTab },
+  { name: "Doctoral Theses Guided", icon: BookOpen, component: DoctoralThesesGuidedTab },
+  { name: "Professional Bodies", icon: Medal, component: ProfessionalBodiesMembershipTab },
+  { name: "Membership in Committee", icon: Network, component: CommitteeMembershipTab },
+  { name: "Research Projects", icon: Filter, component: ResearchProjectsTab },
+  { name: "Patents", icon: BookmarkIcon, component: IntellectualPropertyTab },
+  { name: "Publications", icon: PenLine, component: PublicationsTab }
 ];
 
-const ProfileManagement = () => {
-  const [experienceList, setExperienceList] = useState([
-    { id: 1, experience: 'Assistant Professor, ABC University (2018-2020)' },
-    { id: 2, experience: 'Lecturer, XYZ Institute (2015-2018)' }
-  ]);
-  const [fdpList, setFdpList] = useState([
-    { id: 1, fdp: 'AI & Machine Learning Workshop, 2021' },
-    { id: 2, fdp: 'Faculty Development Program on Data Science, 2022' }
-  ]);
-  const [conferenceList, setConferenceList] = useState([
-    { id: 1, conference: 'International Conference on AI, 2023' },
-    { id: 2, conference: 'National Seminar on Cloud Computing, 2021' }
-  ]);
-  const [journalList, setJournalList] = useState([
-    { id: 1, journal: 'Journal of Computer Science, 2020' },
-    { id: 2, journal: 'International Journal of AI Research, 2022' }
-  ]);
-  const [patentList, setPatentList] = useState([
-    { id: 1, patent: 'Patent on AI-driven Education Platform, 2022' }
-  ]);
-  const [awardList, setAwardList] = useState([
-    { id: 1, award: 'Best Research Paper Award, 2021' },
-    { id: 2, award: 'Distinguished Professor Award, 2023' }
-  ]);
-  const [extraCurricularList, setExtraCurricularList] = useState([
-    { id: 1, activity: 'Member, University Sports Committee' },
-    { id: 2, activity: 'Volunteer, Community Teaching Program' }
-  ]);
-
-  const addNewEntry = (list, setList) => {
-    setList([...list, { id: list.length + 1, value: '' }]);
-  };
-
-  const getActivityColor = (level) => {
-    switch (level) {
-      case 1:
-        return 'bg-green-100';
-      case 2:
-        return 'bg-green-300';
-      case 3:
-        return 'bg-green-500';
-      case 4:
-        return 'bg-green-700';
-      default:
-        return 'bg-gray-200';
-    }
-  };
+function ProfileTabs() {
+  const [activeTab, setActiveTab] = useState(TABS[0].name);
+  const ActiveComponent = TABS.find(tab => tab.name === activeTab)?.component || OverviewTab;
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-100 to-green-100 p-6">
-      <div className="max-w-6xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
-        {/* Left Sidebar: Profile Info */}
-        <div className="flex">
-          <div className="w-1/3 bg-gray-100 p-4">
-            <div className="flex items-center mb-6">
-              <img
-                src="https://via.placeholder.com/100"
-                alt="Profile"
-                className="w-24 h-24 rounded-full border border-gray-300 mr-4"
-              />
-              <div>
-                <h3 className="text-lg font-semibold">Dr. John Doe</h3>
-                <p className="text-gray-600">Professor, Computer Science</p>
-                <p className="text-gray-500">Rank: 5</p>
-              </div>
-            </div>
+    <div className="bg-white rounded-xl border-2 border-gray-200 shadow-lg overflow-hidden max-w-7xl mx-auto">
+      <div className="border-b border-gray-200">
+        <div className="grid grid-cols-6 gap-1 bg-gray-50">
+          {TABS.map((tab) => {
+            const Icon = tab.icon;
+            return (
+              <button
+                key={tab.name}
+                onClick={() => setActiveTab(tab.name)}
+                className={`
+                  group flex flex-col items-center justify-center 
+                  p-3 transition-all duration-300 border-b-4
+                  ${activeTab === tab.name
+                    ? 'bg-blue-50 border-blue-600 text-blue-700'
+                    : 'hover:bg-gray-100 border-transparent text-gray-600 hover:text-blue-600'
+                  }
+                `}
+              >
+                <Icon
+                  size={20}
+                  className={`mb-2 
+                    ${activeTab === tab.name
+                      ? 'text-blue-600'
+                      : 'text-gray-500 group-hover:text-blue-500'
+                    }
+                  `}
+                />
+                <span className="text-xs font-medium text-center">
+                  {tab.name}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
 
-            <button className="w-full bg-blue-500 text-white py-2 rounded-lg mb-6">Edit Profile</button>
-
-            <div className="mb-4">
-              <h4 className="font-semibold text-gray-700">Professional Details</h4>
-              <p className="text-gray-600">Institute: ABC University</p>
-              <p className="text-gray-600">Department: Computer Science</p>
-              <p className="text-gray-600">Date of Joining: Jan 2020</p>
-              <p className="text-gray-600">Employee Code: XYZ123</p>
-            </div>
-
-            <div className="mb-4">
-              <h4 className="font-semibold text-gray-700">Skills</h4>
-              <p className="text-gray-600">React, Python, AI, Machine Learning</p>
-            </div>
-
-            <div className="mb-4">
-              <h4 className="font-semibold text-gray-700">Badges and Certifications</h4>
-              <p className="text-gray-600">Certified AI Practitioner, Data Scientist</p>
-            </div>
-
-            <div className="mt-4">
-              <button className="w-full bg-red-500 text-white py-2 rounded-lg">Logout</button>
-            </div>
-          </div>
-
-          {/* Main Content: Profile Details */}
-          <div className="w-2/3 p-6">
-            <h2 className="text-2xl font-bold mb-4">Profile Overview</h2>
-
-            <div className="grid grid-cols-2 gap-6 mb-6">
-              {/* Points, Projects, Seminars */}
-              <div className="bg-yellow-100 p-4 rounded-lg">
-                <h4 className="text-lg font-semibold">Points</h4>
-                <p className="text-3xl font-bold">250</p>
-              </div>
-              <div className="bg-blue-100 p-4 rounded-lg">
-                <h4 className="text-lg font-semibold">Projects</h4>
-                <p className="text-3xl font-bold">5</p>
-              </div>
-              <div className="bg-purple-100 p-4 rounded-lg">
-                <h4 className="text-lg font-semibold">Seminars</h4>
-                <p className="text-3xl font-bold">3</p>
-              </div>
-              <div className="bg-green-100 p-4 rounded-lg">
-                <h4 className="text-lg font-semibold">Lectures</h4>
-                <p className="text-3xl font-bold">20</p>
-              </div>
-            </div>
-
-            {/* Activity Heatmap */}
-            <div className="bg-gray-50 p-4 rounded-lg mb-6">
-              <h4 className="font-semibold mb-2">Activity</h4>
-              <div className="bg-white p-2 rounded-md">
-                {/* Simulated activity heatmap */}
-                <div className="grid grid-cols-7 gap-1">
-                  {activityData.map((activity, index) => (
-                    <div
-                      key={index}
-                      className={`p-3 ${getActivityColor(activity.level)} text-center rounded`}
-                    >
-                      {activity.day}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Additional Details: Experience, Journals, etc. */}
-            <form>
-              {/* Experience Section */}
-              <div className="mb-4">
-                <h4 className="text-lg font-semibold mb-2">Experience</h4>
-                {experienceList.map((exp, index) => (
-                  <input
-                    key={index}
-                    type="text"
-                    value={exp.experience}
-                    readOnly
-                    className="w-full p-2 border border-gray-300 rounded mb-2"
-                  />
-                ))}
-              </div>
-
-              {/* FDP / Seminars / Workshops Section */}
-              <div className="mb-4">
-                <h4 className="text-lg font-semibold mb-2">FDP / Seminars / Workshops</h4>
-                {fdpList.map((fdp, index) => (
-                  <input
-                    key={index}
-                    type="text"
-                    value={fdp.fdp}
-                    readOnly
-                    className="w-full p-2 border border-gray-300 rounded mb-2"
-                  />
-                ))}
-              </div>
-
-              {/* Conference Section */}
-              <div className="mb-4">
-                <h4 className="text-lg font-semibold mb-2">Conferences</h4>
-                {conferenceList.map((conf, index) => (
-                  <input
-                    key={index}
-                    type="text"
-                    value={conf.conference}
-                    readOnly
-                    className="w-full p-2 border border-gray-300 rounded mb-2"
-                  />
-                ))}
-              </div>
-
-              {/* Journals Section */}
-              <div className="mb-4">
-                <h4 className="text-lg font-semibold mb-2">Journals</h4>
-                {journalList.map((jour, index) => (
-                  <input
-                    key={index}
-                    type="text"
-                    value={jour.journal}
-                    readOnly
-                    className="w-full p-2 border border-gray-300 rounded mb-2"
-                  />
-                ))}
-              </div>
-
-              {/* Patents Section */}
-              <div className="mb-4">
-                <h4 className="text-lg font-semibold mb-2">Patents</h4>
-                {patentList.map((pat, index) => (
-                  <input
-                    key={index}
-                    type="text"
-                    value={pat.patent}
-                    readOnly
-                    className="w-full p-2 border border-gray-300 rounded mb-2"
-                  />
-                ))}
-              </div>
-
-              {/* Awards Section */}
-              <div className="mb-4">
-                <h4 className="text-lg font-semibold mb-2">Awards</h4>
-                {awardList.map((awd, index) => (
-                  <input
-                    key={index}
-                    type="text"
-                    value={awd.award}
-                    readOnly
-                    className="w-full p-2 border border-gray-300 rounded mb-2"
-                  />
-                ))}
-              </div>
-
-              {/* Extracurricular Section */}
-              <div className="mb-4">
-                <h4 className="text-lg font-semibold mb-2">Extracurricular Activities</h4>
-                {extraCurricularList.map((act, index) => (
-                  <input
-                    key={index}
-                    type="text"
-                    value={act.activity}
-                    readOnly
-                    className="w-full p-2 border border-gray-300 rounded mb-2"
-                  />
-                ))}
-              </div>
-            </form>
-          </div>
+      <div className="p-6 bg-gray-50 min-h-[calc(100vh-300px)]">
+        <div className="animate-fade-in">
+          <ActiveComponent />
         </div>
       </div>
     </div>
   );
-};
+}
 
-export default ProfileManagement;
+function App() {
+  return (
+    <div className="min-h-screen bg-gray-100">
+      <ProfileHeader />
+      <ProfileTabs />
+    </div>
+  );
+}
+
+export default App;

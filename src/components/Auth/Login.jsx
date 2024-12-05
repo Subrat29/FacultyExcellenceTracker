@@ -111,9 +111,9 @@ const Login = () => {
               <input type="checkbox" className="mr-2" />
               Remember me
             </label>
-            <Link to="/register" className="text-blue-500 hover:underline">
+            {/* <Link to="/register" className="text-blue-500 hover:underline">
               Register?
-            </Link>
+            </Link> */}
           </div>
           <button
             type="submit"
