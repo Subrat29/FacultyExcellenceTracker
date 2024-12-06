@@ -1,27 +1,27 @@
-import React, { useState } from 'react';
-import { FiEdit2 } from 'react-icons/fi'; // For Edit Icons
-import { AiOutlineCamera } from 'react-icons/ai'; // For Camera Icon
+import React, { useEffect, useState } from 'react';
+import { FiEdit2 } from 'react-icons/fi'; 
+import { AiOutlineCamera } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { getAdminDetails, updateAvatar, updateProfile } from '../../store/features/adminSlice';
+import toast from 'react-hot-toast';
 
-const AdminProfileManagement = ({ profileData = {} }) => {
+const AdminProfile = () => {
   const navigate = useNavigate();
-  // Default profile data
-  const {
-    name = 'Dr. John Doe',
-    email = 'johndoe@example.com',
-    avatar = 'https://via.placeholder.com/150',
-    role = 'College Admin',
-    collage_name = 'Institute of Engineering & Technology',
-    department_name = 'Computer Science Engineering',
-  } = profileData;
+  const dispatch = useDispatch();
+  const [adminDetails, setAdminDetails] = useState({
+    name: '',
+    email: '',
+    avatar:''
+  });
 
   const [profile, setProfile] = useState({
-    name,
-    email,
-    avatar,
-    role,
-    collage_name,
-    department_name,
+    name: '', 
+    email: '',
+    avatar: '',
+    role: '',
+    collage_name: '',
+    department_name: '',
   });
 
   const [isEditModalOpen, setEditModalOpen] = useState(false);
@@ -60,23 +60,90 @@ const AdminProfileManagement = ({ profileData = {} }) => {
     "Department of Library & Information Science",
   ];
 
-  // Handle Avatar Change
+  async function adminProfile() {
+    try {
+      const res = await dispatch(getAdminDetails());
+      const data = res?.payload?.data;
+
+      if (data) {
+        setProfile((prevProfile) => ({
+          ...prevProfile, // Spread previous state
+          name: data.name,
+          email: data.email,
+          phone: data.phone,
+          avatar: data.avatar,
+          role: data.role,
+        }));
+        setAdminDetails((preData)=>({
+          ...preData,
+          name: data.name,
+          email: data.email,
+        }))
+      }
+    } catch (error) {
+      console.error('Error fetching admin details:', error);
+    }
+  }
+
+  function handleInput(e) {
+    const {name, value} = e.target;
+    setAdminDetails({
+        ...adminDetails,
+        [name]: value
+    })
+  }
+
   const handleAvatarChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        setProfile((prev) => ({ ...prev, avatar: reader.result }));
-      };
-      reader.readAsDataURL(file);
+      // Directly update the avatar file in state
+      setAdminDetails((prev) => ({ ...prev, avatar: file }));
+
+      // Immediately call the upload function with the file
+      handleUpdateAvatar(file);
+    }
+  };
+  
+  const handleUpdateAvatar = async (avatarFile) => {
+    if (!avatarFile) {
+      toast.error("Picture not found");
+      return;
+    }
+    const formData = new FormData();
+    formData.append("avatar", avatarFile); // Append the file object directly
+    try {
+      const response = await dispatch(updateAvatar(formData));
+      if(response){
+        adminProfile()
+      }
+      if (response?.payload?.data) {
+        setProfile((prev) => ({
+          ...prev,
+          avatar: response.payload.data.avatar, // Update profile avatar from server response
+        })); 
+      }
+    } catch (error) {
+      console.error("Error updating avatar:", error);
+      toast.error("Failed to update avatar");
     }
   };
 
   // Handle Profile Edit Save
-  const handleSaveProfile = (e) => {
+  const handleSaveProfile = async (e) => {
     e.preventDefault();
-    alert('Profile updated successfully!');
-    setEditModalOpen(false);
+    // Create a FormData instance
+    const formData = new FormData();
+    formData.append('name', adminDetails.name);
+    formData.append('email', adminDetails.email);
+    try {
+      const response = await dispatch(updateProfile(formData));
+      if(response){
+        adminProfile()
+      }
+      setEditModalOpen(false); // Close the modal
+    } catch (error) {
+      console.error("Error updating profile", error);
+    }
   };
 
   // Handle logout profile
@@ -95,6 +162,10 @@ const AdminProfileManagement = ({ profileData = {} }) => {
     // Redirect to login page after logout
     navigate('/login');
   };
+
+  useEffect(() => {
+    adminProfile();
+  },[]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-blue-50 to-green-100 p-6">
@@ -143,19 +214,13 @@ const AdminProfileManagement = ({ profileData = {} }) => {
         </div>
 
         {/* Action Buttons */}
-        <div className="p-6 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-between">
+        <div className="p-6 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-center">
           <button
             onClick={() => setEditModalOpen(true)}
             className="bg-blue-500 text-white py-2 px-6 rounded-lg shadow hover:bg-blue-600 transition-all"
           >
             <FiEdit2 className="inline mr-2" />
             Edit Profile
-          </button>
-          <button
-            onClick={handleLogout}
-            className="bg-red-500 text-white py-2 px-6 rounded-lg shadow hover:bg-red-600 transition-all mt-4 sm:mt-0"
-          >
-            Logout
           </button>
         </div>
       </div>
@@ -169,17 +234,17 @@ const AdminProfileManagement = ({ profileData = {} }) => {
               <div className="grid grid-cols-1 gap-4">
                 <InputField
                   label="Name"
-                  value={profile.name}
-                  onChange={(e) =>
-                    setProfile((prev) => ({ ...prev, name: e.target.value }))
-                  }
+                  name="name"
+                  id="name"
+                  value={adminDetails.name}
+                  onChange={handleInput}
                 />
                 <InputField
                   label="Email"
-                  value={profile.email}
-                  onChange={(e) =>
-                    setProfile((prev) => ({ ...prev, email: e.target.value }))
-                  }
+                  name="email"
+                  id="email"
+                  value={adminDetails.email}
+                  onChange={handleInput}
                 />
                 <DropdownField
                   label="College Name"
@@ -226,7 +291,6 @@ const AdminProfileManagement = ({ profileData = {} }) => {
     </div>
   );
 };
-
 // Reusable Components
 const ProfileDetail = ({ label, value }) => (
   <div className="bg-gray-50 p-4 rounded shadow-sm">
@@ -235,13 +299,15 @@ const ProfileDetail = ({ label, value }) => (
   </div>
 );
 
-const InputField = ({ label, value, onChange }) => (
+const InputField = ({ label, value, onChange,name,id}) => (
   <div>
     <label className="block text-gray-700 text-sm font-semibold mb-1">
       {label}
     </label>
     <input
       type="text"
+      id={id}
+      name={name}
       value={value}
       onChange={onChange}
       className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -249,13 +315,15 @@ const InputField = ({ label, value, onChange }) => (
   </div>
 );
 
-const DropdownField = ({ label, options, value, onChange }) => (
+const DropdownField = ({ label, options, value, onChange,name, id }) => (
   <div>
     <label className="block text-gray-700 text-sm font-semibold mb-1">
       {label}
     </label>
     <select
+    disabled
       value={value}
+      name={name}
       onChange={onChange}
       className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
     >
@@ -268,4 +336,4 @@ const DropdownField = ({ label, options, value, onChange }) => (
   </div>
 );
 
-export default AdminProfileManagement;
+export default AdminProfile;

@@ -62,7 +62,7 @@ const AdminHeader = () => {
   return (
     <div className="bg-white shadow-md p-3 sm:p-4 flex items-center justify-between fixed top-0 left-0 w-full z-50 sm:static">
       <img
-        className="h-8 ml-1 w-10 sm:hidden cursor-pointer"
+        className="h-8 ml-10 w-10 sm:hidden cursor-pointer"
         src={logo}
         alt="FET logo"
         onClick={() => navigate('/')}
