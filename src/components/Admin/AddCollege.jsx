@@ -22,8 +22,8 @@ const AddCollege = () => {
   async function getUniversity() {
     try {
       const res = await dispatch(fetchUniversity());
-      if (res.payload.data) {
-        setUniversity(res.payload.data);
+      if (res.payload.data.data) {
+        setUniversity(res.payload.data.data);
       }
     } catch (error) {
       console.error("Error:", error);
@@ -33,8 +33,8 @@ const AddCollege = () => {
   async function getCollege() {
     try {
       const res = await dispatch(fetchCollege());
-      if (res.payload.data) {
-        setCollege(res.payload.data);
+      if (res.payload.data.data) {
+        setCollege(res.payload.data.data);
       }
     } catch (error) {
       console.error("Error:", error);
@@ -233,22 +233,24 @@ const AddCollege = () => {
                 ))}
             </thead>
             <tbody {...getTableBodyProps()}>
-                {rows.map((row) => {
+              {rows.map((row) => {
                 prepareRow(row);
+                const { key: rowKey, ...rowProps } = row.getRowProps();
                 return (
-                    <tr {...row.getRowProps()} className="border-b">
-                    {row.cells.map((cell) => (
-                        <td
-                        {...cell.getCellProps()}
-                        className="px-4 py-2 border text-sm"
-                        >
-                        {cell.render("Cell")}
+                  <tr key={rowKey} {...rowProps} className="border-b">
+                    {row.cells.map((cell) => {
+                      const { key: cellKey, ...cellProps } = cell.getCellProps();
+                      return (
+                        <td key={cellKey} {...cellProps} className="px-4 py-2 border text-sm">
+                          {cell.render("Cell")}
                         </td>
-                    ))}
-                    </tr>
+                      );
+                    })}
+                  </tr>
                 );
-                })}
+              })}
             </tbody>
+
             </table>
         </div>
       </div>

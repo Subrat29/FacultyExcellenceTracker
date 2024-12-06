@@ -25,14 +25,14 @@ const AddUniversity = () => {
 
   async function getSession() {
     try {
-      const res = await dispatch(fetchSession()); 
-      if (res.payload.data) {
-        // Extract only the session names
-        const sessionNames = res.payload.data.map(session => session.session_name);
-        setSelectedSession(sessionNames); // Set the session names in state
+      const res = await dispatch(fetchSession());
+      if (res.payload?.data?.data) {
+        setSelectedSession(res.payload.data.data);
+      } else {
+        console.error("No session data found in response.");
       }
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error fetching session data:", error);
     }
   }
 
@@ -59,7 +59,7 @@ const AddUniversity = () => {
       </h1>
       <form onSubmit={onSubmit} className="space-y-4">
 
-               {/* Session ID */}
+          {/* Session ID */}
           <div>
           <label htmlFor="session" className="text-sm block font-medium text-gray-700">
             Select Session
@@ -74,9 +74,9 @@ const AddUniversity = () => {
             <option value="" disabled>
               Select a session
             </option>
-            {selectedSession.map((session, index) => (
-              <option key={index} value={session}>
-                {session}
+            {selectedSession.map((s, index) => (
+              <option key={index} value={s._id}>
+                {s.session_name}
               </option>
             ))}
           </select>
