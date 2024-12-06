@@ -1,16 +1,17 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import {
   loginSuccess,
   loginFailure,
   setLoading,
-  logout, // Make sure to import logout action
+  logout,
 } from '../store/features/authSlice';
 
 const useAuthenticate = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const { status, loading, accessToken, user, roleType } = useSelector(
     (state) => state.auth
@@ -21,6 +22,17 @@ const useAuthenticate = () => {
       const storedAccessToken = localStorage.getItem('accessToken');
       const storedUser = localStorage.getItem('user');
       const storedRoleType = localStorage.getItem('roleType');
+
+      // Check if current route is register and has a token
+      const isRegisterRouteWithToken =
+        location.pathname.startsWith('/register') &&
+        new URLSearchParams(location.search).has('token');
+
+      // If register route with token, skip authentication checks
+      if (isRegisterRouteWithToken) {
+        dispatch(setLoading(false));
+        return;
+      }
 
       // If no token or user in localStorage, force logout
       if (!storedAccessToken || !storedUser) {
@@ -48,7 +60,14 @@ const useAuthenticate = () => {
     };
 
     checkAuthentication();
-  }, [dispatch, navigate, accessToken, user]);
+  }, [
+    dispatch,
+    navigate,
+    location.pathname,
+    location.search,
+    accessToken,
+    user,
+  ]);
 
   return { status, loading };
 };

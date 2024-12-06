@@ -27,9 +27,12 @@ const ErrorPage = React.lazy(() => import('./utils/ErrorPage'));
 import { loginSuccess } from './store/features/authSlice';
 import ProtectedRoute from './components/Admin/protectedRoute';
 import useAuthenticate from './hooks/useAuth';
+import ChangePasswordPage from './pages/ChangePassword';
+import { getRoleFromToken } from './utils/getRoleFromToken';
 
 function App() {
   const dispatch = useDispatch();
+  const role = getRoleFromToken();
 
   // Get data from Redux store
   const { accessToken, refreshToken, user, roleType, status } = useSelector(
@@ -38,7 +41,6 @@ function App() {
 
   // Initialize user data in the Redux store from localStorage on app load
   useEffect(() => {
-    // Only load the data if it is not already present in the Redux store
     if (!accessToken && !refreshToken && !user) {
       const storedAccessToken = localStorage.getItem('accessToken');
       const storedRefreshToken = localStorage.getItem('refreshToken');
@@ -74,7 +76,12 @@ function App() {
       <AuthenticateWrapper>
         <Toaster />
         <Suspense fallback={<LoadingScreen />}>
-          <AppRoutes status={status} user={user} roleType={roleType} />
+          <AppRoutes
+            status={status}
+            user={user}
+            roleType={roleType}
+            role={role}
+          />
         </Suspense>
       </AuthenticateWrapper>
     </Router>
@@ -82,7 +89,7 @@ function App() {
 }
 
 // Separate component for routes to use useLocation inside Router
-const AppRoutes = ({ status, user }) => {
+const AppRoutes = ({ status, user, role }) => {
   const location = useLocation();
 
   return (
@@ -94,11 +101,11 @@ const AppRoutes = ({ status, user }) => {
           status === 'authenticated' ? (
             <Navigate
               to={
-                user?.role === 'faculty'
+                role === 'faculty'
                   ? '/faculty-dashboard'
-                  : user?.role === 'admin'
+                  : role === 'admin'
                   ? '/admin-dashboard'
-                  : user?.role === 'student'
+                  : role === 'student'
                   ? '/student-dashboard'
                   : '/login' // fallback if the role is undefined or not recognized
               }
@@ -109,7 +116,6 @@ const AppRoutes = ({ status, user }) => {
           )
         }
       />
-
       {/* Public Routes */}
       <Route
         path="/login"
@@ -117,11 +123,11 @@ const AppRoutes = ({ status, user }) => {
           status === 'authenticated' ? (
             <Navigate
               to={
-                user?.role === 'faculty'
+                role === 'faculty'
                   ? '/faculty-dashboard'
-                  : user?.role === 'admin'
+                  : role === 'admin'
                   ? '/admin-dashboard'
-                  : user?.role === 'student'
+                  : role === 'student'
                   ? '/student-dashboard'
                   : '/' // fallback route if role is missing
               }
@@ -132,35 +138,40 @@ const AppRoutes = ({ status, user }) => {
           )
         }
       />
-
-      <Route
-        path="/register/*"
-        element={
-          // Use useLocation to check the URL for the token query parameter
-          (() => {
-            const hasToken = new URLSearchParams(location.search).has('token');
-
-            if (hasToken) {
-              // Allow access if token is present
-              return <RegisterPage />;
-            } else {
-              // Redirect to error page if token is missing
-              return <Navigate to="/error" replace />;
-            }
-          })()
-        }
-      />
-
+      {/* Register Route */}
+      <Route path="/register/*" element={<RegisterPage />} />
       {/* Protected Routes */}
       <Route element={<ProtectedRoute redirectPath="/login" />}>
-        <Route path="/faculty-dashboard/*" element={<FacultyDashboardPage />} />
-        <Route path="/admin-dashboard/*" element={<AdminDashboardPage />} />
-        <Route path="/student-dashboard/*" element={<StudentDashboardPage />} />
+        <Route
+          path="/faculty-dashboard/*"
+          element={
+            role === 'faculty' ? (
+              <FacultyDashboardPage />
+            ) : (
+              <Navigate to="/error" />
+            )
+          }
+        />
+        <Route
+          path="/admin-dashboard/*"
+          element={
+            role === 'admin' ? <AdminDashboardPage /> : <Navigate to="/error" />
+          }
+        />
+        <Route
+          path="/student-dashboard/*"
+          element={
+            role === 'student' ? (
+              <StudentDashboardPage />
+            ) : (
+              <Navigate to="/error" />
+            )
+          }
+        />
+        <Route path="/change-password" element={<ChangePasswordPage />} />
       </Route>
-
       {/* Error Route */}
       <Route path="/error" element={<ErrorPage />} />
-
       {/* Catch-all route */}
       <Route path="*" element={<Navigate to="/error" replace />} />
     </Routes>
@@ -180,14 +191,19 @@ const LoadingScreen = () => (
 // Authentication Wrapper
 const AuthenticateWrapper = ({ children }) => {
   const { status: authStatus, loading: authLoading } = useAuthenticate();
+  const location = useLocation();
 
-  // If still loading, show the loading screen
+  // Check if the current route is register and has a token
+  const isRegisterRouteWithToken =
+    location.pathname.startsWith('/register') &&
+    new URLSearchParams(location.search).has('token');
+
   if (authLoading) {
     return <LoadingScreen />;
   }
 
-  // If unauthenticated, render the Login page
-  if (authStatus === 'unauthenticated') {
+  // Only redirect to login if it's not the register route with a token
+  if (authStatus === 'unauthenticated' && !isRegisterRouteWithToken) {
     return (
       <Suspense fallback={<LoadingScreen />}>
         <LoginPage />

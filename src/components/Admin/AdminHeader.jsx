@@ -1,21 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import AdminSidebarForMobile from './AdminSidebarForMobile';
 import logo from '../../assets/Logo.png';
 import { useNavigate } from 'react-router-dom';
+import { FaCog, FaSignOutAlt, FaLock } from 'react-icons/fa'; // Import icons
 
 const AdminHeader = () => {
   const navigate = useNavigate();
 
   const [selectedLanguage, setSelectedLanguage] = useState('English');
-  const [selectedYear, setSelectedYear] = useState("2023-24");
+  const [selectedYear, setSelectedYear] = useState('2023-24');
   const [openSidebar, setOpenSidebar] = useState(false);
-  
+  const [dropdownOpen, setDropdownOpen] = useState(false); // Manage dropdown state
+  const dropdownRef = useRef(null); // Ref for dropdown
+
   // handle language change
   const handleLanguageChange = (e) => {
     setSelectedLanguage(e.target.value);
   };
 
-  // handle year change   
+  // handle year change
   const handleYearChange = (e) => {
     setSelectedYear(e.target.value);
   };
@@ -37,14 +40,41 @@ const AdminHeader = () => {
     // Redirect to login page after logout
     navigate('/');
   };
+
+  const handleChangePassword = () => {
+    navigate('/change-password'); // Redirect to change-password page
+  };
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownOpen(false);
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   return (
     <div className="bg-white shadow-md p-3 sm:p-4 flex items-center justify-between fixed top-0 left-0 w-full z-50 sm:static">
-      <img className="h-8 ml-1 w-10 sm:hidden" src={logo} alt="" />
-      <h1 className="text-2xl font-bold hidden sm:text-2xl sm:flex">
+      <img
+        className="h-8 ml-10 w-10 sm:hidden cursor-pointer"
+        src={logo}
+        alt="FET logo"
+        onClick={() => navigate('/')}
+      />
+      <h1
+        className="text-2xl font-bold hidden sm:text-2xl cursor-pointer sm:flex"
+        onClick={() => navigate('/')}
+      >
         Faculty Excellence Tracker
       </h1>
 
-      <div className=" hidden sm:flex space-x-1">
+      <div className="hidden sm:flex space-x-1">
         <div className="flex space-x-1">
           <select
             value={selectedYear}
@@ -66,23 +96,48 @@ const AdminHeader = () => {
             <option value="Tamil">Tamil</option>
           </select>
         </div>
-        {/* Logout Button */}
-        <button
-          className="bg-red-400 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-all duration-200 w-full sm:w-auto"
-          onClick={handleLogout}
-        >
-          Logout
-        </button>
-      </div>
-      
-      <div className="px-3 py-1 text-white font-medium rounded-lg bg-blue-500 shadow-sm sm:hidden">
 
+        {/* Settings Button */}
+        <div className="relative" ref={dropdownRef}>
+          <button
+            className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-all duration-200 w-full sm:w-auto flex items-center"
+            onClick={() => setDropdownOpen(!dropdownOpen)} // Toggle dropdown visibility
+          >
+            <FaCog className="mr-2" /> {/* Settings Icon */}
+            Settings
+          </button>
+
+          {/* Dropdown Menu */}
+          {dropdownOpen && (
+            <div className="absolute right-0 mt-2 bg-white shadow-lg rounded-md w-48 z-10 border border-gray-200 animate-fade-in">
+              <button
+                className="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 flex items-center transition-colors duration-200"
+                onClick={handleChangePassword}
+              >
+                <FaLock className="mr-2" />{' '}
+                {/* Lock Icon for Change Password */}
+                Change Password
+              </button>
+              <button
+                className="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 flex items-center transition-colors duration-200"
+                onClick={handleLogout}
+              >
+                <FaSignOutAlt className="mr-2" />{' '}
+                {/* Sign Out Icon for Logout */}
+                Logout
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+
+      <div className="px-3 py-1 text-white font-medium rounded-lg bg-blue-500 shadow-sm sm:hidden">
         2024-2024
       </div>
 
       <div
-        className={`fixed top-0 left-0  bg-blue-500 text-white shadow-lg z-50 transform ${
-          openSidebar ? "translate-x-0" : "-translate-x-full"
+        className={`fixed top-0 left-0 bg-blue-500 text-white shadow-lg z-50 transform ${
+          openSidebar ? 'translate-x-0' : '-translate-x-full'
         } transition-transform duration-300 sm:hidden`}
       >
         <AdminSidebarForMobile />
