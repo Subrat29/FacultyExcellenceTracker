@@ -37,7 +37,7 @@ export const addSession = createAsyncThunk("/admin/addSession", async(data)=>{
 export const fetchSession = createAsyncThunk("/admin/getSession", async () => {
     try {
         const res = await axiosInstance.get('v1/session/fetch');
-        console.log('API Response:', res); // Log the full response for debugging
+        // console.log('API Response:', res); // Log the full response for debugging
 
         // Return only serializable data (e.g., res.data)
         return res.data; 
