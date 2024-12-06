@@ -12,7 +12,7 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   (config) => {
     // Get token from localStorage or wherever it's stored (e.g., Redux, cookies)
-    const token = localStorage.getItem('authToken'); // Adjust according to your token storage
+    const token = localStorage.getItem('accessToken'); // Adjust according to your token storage
 
     // If token exists, set it in the Authorization header
 
