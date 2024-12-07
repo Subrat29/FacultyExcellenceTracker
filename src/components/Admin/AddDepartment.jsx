@@ -16,8 +16,8 @@ const AddDepartment = () => {
         try {
             const res = await dispatch(fetchCollege());
             if (res.payload.data) {
-                console.log("Fetched data:", res.payload.data); // Log fetched data
-                setCollege(res.payload.data); // Directly update state with fetched data
+                console.log("Fetched data:", res.payload.data.data); // Log fetched data
+                setCollege(res.payload.data.data); // Directly update state with fetched data
             } else {
                 console.warn("No data found in response.");
             }
@@ -29,8 +29,8 @@ const AddDepartment = () => {
     async function getDepartment() {
         try {
           const res = await dispatch(fetchDepartment());
-          if (res.payload.data) {
-            setDepartment(res.payload.data);
+          if (res.payload.data.data) {
+            setDepartment(res.payload.data.data);
           }
         } catch (error) {
           console.error("Error:", error);
