@@ -575,32 +575,32 @@ function AcademicIDs() {
 
       // Use Promise.allSettled to handle multiple save operations concurrently
       const saveResults = await Promise.allSettled([
-        // handleSaveData(
-        //   'Publications',
-        //   orcidData,
-        //   '/v1/faculty/researchpublications/add'
-        // ),
-        // handleSaveData(
-        //   'Employment',
-        //   employmentData,
-        //   '/v1/faculty/experience/add'
-        // ),
-        // handleSaveData(
-        //   'Distinctions',
-        //   distinctionData,
-        //   '/v1/faculty/awards/add'
-        // ),
-        // handleSaveData(
-        //   'Memberships',
-        //   membershipData,
-        //   '/v1/faculty/professionalMembership/add'
-        // ),
+        handleSaveData(
+          'Publications',
+          orcidData,
+          '/v1/faculty/researchpublications/add'
+        ),
+        handleSaveData(
+          'Employment',
+          employmentData,
+          '/v1/faculty/experience/add'
+        ),
+        handleSaveData(
+          'Distinctions',
+          distinctionData,
+          '/v1/faculty/awards/add'
+        ),
+        handleSaveData(
+          'Memberships',
+          membershipData,
+          '/v1/faculty/professionalMembership/add'
+        ),
         // handleSaveData('Services', serviceData, '/v1/faculty/services/add'),
-        // handleSaveData(
-        //   'Peer Reviews',
-        //   peerReviewData,
-        //   '/v1/faculty/peersfeedback/add'
-        // ),
+        handleSaveData(
+          'Peer Reviews',
+          peerReviewData,
+          '/v1/faculty/peersfeedback/add'
+        ),
         handleSaveData('Fundings', fundingData, '/v1/faculty/projects/add'),
         // handleSaveData(
         //   'Invited Positions',
@@ -678,13 +678,8 @@ function AcademicIDs() {
     alert(`Updating publications for ${academicIds[index].label}`);
   };
 
-  // consoleTerminal('Publication Data :: ', orcidData);
-  // consoleTerminal('Employment Data :: ', employmentData);
-  // consoleTerminal('Distinction Data :: ', distinctionData);
-  // consoleTerminal('Membership Data :: ', membershipData);
   consoleTerminal('Service Data :: ', serviceData);
   consoleTerminal('Peer Review Data :: ', peerReviewData);
-  consoleTerminal('Funding Data :: ', fundingData);
   consoleTerminal('Invited Position Data :: ', invitedPositionData);
 
   const handleSubmit = async () => {
