@@ -138,8 +138,8 @@ const DetailedAnalysisWithCharts = () => {
             <tr>
               <th className="border border-gray-300 p-3">Metric</th>
               <th className="border border-gray-300 p-3">Current Performance</th>
-              <th className="border border-gray-300 p-3">AI Analysis</th>
-              <th className="border border-gray-300 p-3">Improvement Areas</th>
+              <th className="border border-gray-300 p-3">Appraisal Analysis</th>
+              {/* <th className="border border-gray-300 p-3">Improvement Areas</th> */}
               <th className="border border-gray-300 p-3">Suggested Actions</th>
             </tr>
           </thead>
@@ -149,7 +149,7 @@ const DetailedAnalysisWithCharts = () => {
                 <td className="border border-gray-300 p-3">{item.metric}</td>
                 <td className="border border-gray-300 p-3">{item.currentPerformance}</td>
                 <td className="border border-gray-300 p-3">{item.aiAnalysis}</td>
-                <td className="border border-gray-300 p-3">{item.improvementAreas}</td>
+                {/* <td className="border border-gray-300 p-3">{item.improvementAreas}</td> */}
                 <td className="border border-gray-300 p-3">{item.suggestedActions}</td>
               </tr>
             ))}
@@ -167,7 +167,7 @@ const DetailedAnalysisWithCharts = () => {
 
       {/* Pie Chart Section */}
       <div className="bg-gray-50 p-6 rounded-lg mb-8 shadow">
-        <h3 className="text-xl font-semibold mb-4 text-center">AI Analysis Breakdown (Pie Chart)</h3>
+        <h3 className="text-xl font-semibold mb-4 text-center">Appraisal Analysis Breakdown (Pie Chart)</h3>
         <div className="max-w-lg mx-auto">
           <Pie data={pieData} options={chartOptions} />
         </div>
