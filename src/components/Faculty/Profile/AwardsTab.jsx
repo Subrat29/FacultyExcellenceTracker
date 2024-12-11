@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   Plus,
   Edit,
@@ -9,10 +9,9 @@ import {
   Calendar,
   Building2,
 } from 'lucide-react';
-import axios from 'axios';
-import { useSelector } from 'react-redux';
 import axiosInstance from '../../../services/admin';
-import consoleTerminal from '../../../utils/consoleTerminal';
+import CSVImport from '../../General/importCSV';
+import { useSelector } from 'react-redux';
 
 function AwardsTab() {
   const faculty_id = useSelector((state) => state.auth.user._id);
@@ -26,89 +25,76 @@ function AwardsTab() {
     url: '',
   });
 
+  // States for handling import CSV and Add Manually modals
+  const [modalType, setModalType] = useState(null); // null, 'import', or 'add'
+  const [isImporting, setIsImporting] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const dropdownRef = useRef(null);
+
   // Fetch honours data from the backend on component mount
   useEffect(() => {
-    axios;
     axiosInstance
       .get(`/v1/faculty/awards/fetch/${faculty_id}`)
       .then((response) => {
-        setHonours(response.data.data); // Assuming response.data is an array of awards
+        setHonours(response.data.data);
       })
-
       .catch((error) => {
         console.error('Error fetching awards:', error);
       });
+  }, [faculty_id]);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setShowDropdown(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
   }, []);
 
   const handleAddNew = () => {
-    setEditingIndex(-1);
+    setModalType('add');
+    setShowDropdown(false);
   };
 
-  const handleEdit = (index) => {
-    setEditingIndex(index);
+  const handleImportCSV = () => {
+    setModalType('import');
+    setShowDropdown(false);
+  };
+
+  const handleCancel = () => {
+    setModalType(null); // Close the modal
+    setIsImporting(false);
+    setEditingIndex(null);
+    setNewHonour({
+      date: '',
+      title: '',
+      description: '',
+      awarding_body: '',
+      url: '',
+    });
   };
 
   const handleSave = (index) => {
     if (index === -1) {
       // Add new award
-      consoleTerminal('newHonour', newHonour);
-      //   axiosInstance
-      //     .post('/v1/faculty/awards/update', newHonour)
-      //     .then((response) => {
-      //       setHonours([...honours, response.data.data]); // Add the new award to the state
-      //     })
-      //     .catch((error) => {
-      //       console.error('Error adding award:', error);
-      //     });
+      // Call API to add award logic
     } else {
       // Update existing award
-      consoleTerminal('honours', honours);
-      //   const updatedHonour = honours[index];
-      //   axios
-      //     .put(`/v1/faculty/update`, updatedHonour)
-      //     .then((response) => {
-      //       const updatedHonours = [...honours];
-      //       updatedHonours[index] = response.data; // Update the award in the state
-      //       setHonours(updatedHonours);
-      //     })
-      //     .catch((error) => {
-      //       console.error('Error updating award:', error);
-      //     });
+      // Call API to update award logic
     }
 
-    setNewHonour({
-      date: '',
-      title: '',
-      description: '',
-      awarding_body: '',
-      url: '',
-    });
-    setEditingIndex(null);
-  };
-
-  const handleCancel = () => {
-    setEditingIndex(null);
-    setNewHonour({
-      date: '',
-      title: '',
-      description: '',
-      awarding_body: '',
-      url: '',
-    });
+    // Reset form and modal state
+    handleCancel();
   };
 
   const handleDelete = (index) => {
-    const awardId = honours[index]._id;
-    const updatedHonours = honours.filter((_, i) => i !== index);
-    setHonours(updatedHonours);
-    consoleTerminal('updatedHonours', updatedHonours);
-    // axios
-    //   .delete(`/api/awards/${awardId}`)
-    //   .then(() => {
-    //   })
-    //   .catch((error) => {
-    //     console.error('Error deleting award:', error);
-    //   });
+    // Delete award logic
   };
 
   const handleInputChange = (e, field) => {
@@ -127,6 +113,11 @@ function AwardsTab() {
     }
   };
 
+  const handleImportSuccess = (importedData) => {
+    setHonours([...honours, ...importedData]);
+    handleCancel();
+  };
+
   return (
     <div className="bg-gradient-to-br from-white to-blue-50 shadow-lg rounded-xl p-6 mx-auto">
       <div className="flex justify-between items-center mb-6">
@@ -136,18 +127,38 @@ function AwardsTab() {
             Honours and Awards
           </h2>
         </div>
-        <button
-          onClick={handleAddNew}
-          className="bg-blue-500 text-white rounded-full p-2 hover:bg-blue-600 transition transform hover:scale-110"
-          title="Add New Award"
-        >
-          <Plus className="h-6 w-6" />
-        </button>
+        <div className="relative" ref={dropdownRef}>
+          <button
+            onClick={() => setShowDropdown(!showDropdown)}
+            className="bg-blue-500 text-white rounded-full p-2 hover:bg-blue-600 transition transform hover:scale-110"
+            title="Add New Award"
+          >
+            <Plus className="h-6 w-6" />
+          </button>
+          {showDropdown && (
+            <div className="absolute right-0 mt-2 bg-white border border-blue-200 rounded-lg shadow-lg z-10">
+              <button
+                onClick={handleAddNew}
+                className="flex items-center px-4 py-2 w-full text-left text-gray-700 hover:bg-gray-100"
+              >
+                Add Manually
+              </button>
+              <button
+                onClick={handleImportCSV}
+                className="flex items-center px-4 py-2 w-full text-left text-gray-700 hover:bg-gray-100"
+              >
+                Import CSV
+              </button>
+            </div>
+          )}
+        </div>
       </div>
 
-      {editingIndex === -1 && (
+      {/* Display modals based on modalType */}
+      {modalType === 'add' && (
         <div className="bg-white border-2 border-blue-100 rounded-lg p-5 mb-4 shadow-sm">
           <div className="space-y-4">
+            {/* Add manually form inputs */}
             <div className="flex space-x-3 items-center">
               <Calendar className="h-5 w-5 text-blue-500" />
               <input
@@ -215,6 +226,16 @@ function AwardsTab() {
         </div>
       )}
 
+      {modalType === 'import' && (
+        <CSVImport
+          importUrl="/v1/faculty/awards/import"
+          sampleDataUrl="/honuours_awards.csv"
+          onImportSuccess={handleImportSuccess}
+          onCancel={handleCancel}
+        />
+      )}
+
+      {/* Render the existing awards */}
       {honours.map((honour, index) => (
         <div
           key={index}

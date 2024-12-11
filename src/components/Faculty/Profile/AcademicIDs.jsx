@@ -92,6 +92,7 @@ function AcademicIDs() {
   const [peerReviewData, setPeerReviewData] = useState([]);
   const [fundingData, setFundingData] = useState([]);
   const [invitedPositionData, setInvitedPositionData] = useState([]);
+  const [qualificationsData, setQualificationsData] = useState([]);
 
   const handleToggleEdit = () => {
     if (isEditing) {
@@ -531,6 +532,61 @@ function AcademicIDs() {
     }
   };
 
+  const fetchQualifications = async (data) => {
+    // Navigate to the qualifications data via the correct path
+    const qualificationsData = data['activities-summary']?.qualifications;
+
+    // Extract the affiliation-group if it exists
+    const extractedQualifications = qualificationsData?.['affiliation-group']
+      ?.length
+      ? qualificationsData['affiliation-group'].flatMap((group) => {
+          return (
+            group['summaries']?.map((summary) => {
+              const qualification = summary['qualification-summary'];
+
+              // Extracting all necessary fields with fallback to 'N/A' if not found
+              const sourceName =
+                qualification['source']?.['source-name']?.value || 'N/A';
+              const departmentName = qualification['department-name'] || 'N/A';
+              const roleTitle = qualification['role-title'] || 'N/A';
+              const startDate = `${
+                qualification['start-date']?.year?.value || 'N/A'
+              }`;
+              const endDate = `${
+                qualification['end-date']?.year?.value || 'N/A'
+              }`; // Use end year if available
+              const organizationName =
+                qualification['organization']?.['name'] || 'N/A';
+              const organizationAddress = qualification['organization']?.[
+                'address'
+              ]
+                ? `${qualification['organization']['address'].city}, ${qualification['organization']['address'].region}, ${qualification['organization']['address'].country}`
+                : 'N/A';
+              const organizationId =
+                qualification['organization']?.['disambiguated-organization']?.[
+                  'disambiguated-organization-identifier'
+                ] || 'N/A';
+
+              return {
+                departmentName,
+                roleTitle,
+                startDate,
+                endDate,
+                organizationName,
+                organizationAddress,
+                organizationId,
+              };
+            }) || []
+          );
+        })
+      : []; // Default to an empty array if no affiliation-group is present
+
+    // Update the state with the extracted qualifications if any data is found
+    if (extractedQualifications.length > 0) {
+      setQualificationsData(extractedQualifications); // Assuming `setQualificationsData` is your state update function
+    }
+  };
+
   const handleImport = async (index) => {
     setLoading(true); // Set loading to true to disable interactions
     consoleTerminal('Index :: ', index);
@@ -572,40 +628,46 @@ function AcademicIDs() {
       fetchPeerReviews(data);
       fetchFundings(data);
       fetchInvitedPositions(data);
+      fetchQualifications(data);
 
       // Use Promise.allSettled to handle multiple save operations concurrently
       const saveResults = await Promise.allSettled([
-        handleSaveData(
-          'Publications',
-          orcidData,
-          '/v1/faculty/researchpublications/add'
-        ),
-        handleSaveData(
-          'Employment',
-          employmentData,
-          '/v1/faculty/experience/add'
-        ),
-        handleSaveData(
-          'Distinctions',
-          distinctionData,
-          '/v1/faculty/awards/add'
-        ),
-        handleSaveData(
-          'Memberships',
-          membershipData,
-          '/v1/faculty/professionalMembership/add'
-        ),
-        // handleSaveData('Services', serviceData, '/v1/faculty/services/add'),
-        handleSaveData(
-          'Peer Reviews',
-          peerReviewData,
-          '/v1/faculty/peersfeedback/add'
-        ),
-        handleSaveData('Fundings', fundingData, '/v1/faculty/projects/add'),
+        // handleSaveData(
+        //   'Publications',
+        //   orcidData,
+        //   '/v1/faculty/researchpublications/import'
+        // ),
+        // handleSaveData(
+        //   'Employment',
+        //   employmentData,
+        //   '/v1/faculty/experience/import'
+        // ),
+        // handleSaveData(
+        //   'Distinctions',
+        //   distinctionData,
+        //   '/v1/faculty/awards/import'
+        // ),
+        // handleSaveData(
+        //   'Memberships',
+        //   membershipData,
+        //   '/v1/faculty/professionalMembership/import'
+        // ),
+        // // handleSaveData('Services', serviceData, '/v1/faculty/services/import'),
+        // handleSaveData(
+        //   'Peer Reviews',
+        //   peerReviewData,
+        //   '/v1/faculty/peersfeedback/import'
+        // ),
+        // handleSaveData('Fundings', fundingData, '/v1/faculty/projects/import'),
         // handleSaveData(
         //   'Invited Positions',
         //   invitedPositionData,
-        //   '/v1/faculty/invitedpositions/add'
+        //   '/v1/faculty/invitedpositions/import'
+        // ),
+        // handleSaveData(
+        //   'Qualifications',
+        //   qualificationsData,
+        //   '/v1/faculty/qualifications/import'
         // ),
       ]);
 
@@ -679,8 +741,8 @@ function AcademicIDs() {
   };
 
   consoleTerminal('Service Data :: ', serviceData);
-  consoleTerminal('Peer Review Data :: ', peerReviewData);
   consoleTerminal('Invited Position Data :: ', invitedPositionData);
+  consoleTerminal('Qualifications Data :: ', qualificationsData);
 
   const handleSubmit = async () => {
     setLoading(true);
