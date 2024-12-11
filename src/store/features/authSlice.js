@@ -5,6 +5,8 @@ const initialState = {
   refreshToken: null,
   user: null,
   roleType: null,
+  status: 'unauthenticated',
+  loading: true,
 };
 
 const authSlice = createSlice({
@@ -17,15 +19,33 @@ const authSlice = createSlice({
       state.refreshToken = refreshToken;
       state.user = user;
       state.roleType = roleType;
+      state.status = 'authenticated';
+      state.loading = false;
+    },
+    loginFailure: (state) => {
+      state.status = 'unauthenticated';
+      state.loading = false;
     },
     logout: (state) => {
       state.accessToken = null;
       state.refreshToken = null;
       state.user = null;
       state.roleType = null;
+      state.status = 'unauthenticated';
+      state.loading = false;
+
+      // Clear localStorage
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
+      localStorage.removeItem('user');
+      localStorage.removeItem('roleType');
+    },
+    setLoading: (state, action) => {
+      state.loading = action.payload;
     },
   },
 });
 
-export const { loginSuccess, logout } = authSlice.actions;
+export const { loginSuccess, loginFailure, logout, setLoading } =
+  authSlice.actions;
 export default authSlice.reducer;
