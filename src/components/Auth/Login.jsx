@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { loginSuccess } from '../../store/features/authSlice';
 import axiosInstance from '../../services/admin';
 import { Eye, EyeOff } from 'lucide-react'; // Import the Lucide eye icons
+import toast from 'react-hot-toast'; // Import toast
 
 const Login = () => {
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ const Login = () => {
   const [role, setRole] = useState('');
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
+  const [loading, setLoading] = useState(false); // State to track loading
 
   const handleRoleChange = (e) => {
     setRole(e.target.value);
@@ -29,6 +31,9 @@ const Login = () => {
       setError('Please fill all the fields.');
       return;
     }
+
+    setLoading(true); // Set loading state to true
+    const loadingToastId = toast.loading('Logging in...'); // Show loading toast
 
     try {
       const response = await axiosInstance.post('/v1/user/login', {
@@ -53,6 +58,7 @@ const Login = () => {
         user
       )}; path=/; secure; HttpOnly`;
 
+      toast.success('Login successful!'); // Show success toast
       if (role === 'admin') {
         navigate('/admin-dashboard');
       } else if (role === 'faculty') {
@@ -63,6 +69,10 @@ const Login = () => {
     } catch (error) {
       console.error('Error logging in: ', error);
       setError('Invalid email or password.');
+      toast.error('Invalid email or password.'); // Show error toast
+    } finally {
+      setLoading(false); // Set loading state to false
+      toast.dismiss(loadingToastId); // Dismiss loading toast
     }
   };
 
@@ -78,6 +88,7 @@ const Login = () => {
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email"
             className="w-full p-2 border border-gray-300 rounded mb-4"
+            disabled={loading} // Disable input if loading
           />
           <div className="relative mb-4">
             <input
@@ -86,11 +97,13 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Password"
               className="w-full p-2 border border-gray-300 rounded"
+              disabled={loading} // Disable input if loading
             />
             <button
               type="button"
               onClick={handlePasswordVisibility}
               className="absolute top-1/2 right-3 transform -translate-y-1/2"
+              disabled={loading} // Disable button if loading
             >
               {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
             </button>
@@ -99,6 +112,7 @@ const Login = () => {
             value={role}
             onChange={handleRoleChange}
             className="w-full p-2 border border-gray-300 rounded mb-4"
+            disabled={loading} // Disable select if loading
           >
             <option value="">Select Role</option>
             <option value="faculty">Faculty</option>
@@ -108,7 +122,8 @@ const Login = () => {
 
           <div className="flex items-center justify-between mb-4">
             <label>
-              <input type="checkbox" className="mr-2" />
+              <input type="checkbox" className="mr-2" disabled={loading} />{' '}
+              {/* Disable checkbox if loading */}
               Remember me
             </label>
             {/* <Link to="/register" className="text-blue-500 hover:underline">
@@ -117,9 +132,12 @@ const Login = () => {
           </div>
           <button
             type="submit"
-            className="w-full bg-green-500 text-white p-2 rounded hover:bg-green-600"
+            className={`w-full bg-green-500 text-white p-2 rounded hover:bg-green-600 ${
+              loading ? 'cursor-not-allowed opacity-50' : ''
+            }`}
+            disabled={loading} // Disable button if loading
           >
-            Login
+            {loading ? 'Logging in...' : 'Login'}
           </button>
         </form>
       </div>

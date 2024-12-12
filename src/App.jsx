@@ -73,8 +73,8 @@ function App() {
 
   return (
     <Router>
+      <Toaster />
       <AuthenticateWrapper>
-        <Toaster />
         <Suspense fallback={<LoadingScreen />}>
           <AppRoutes
             status={status}
