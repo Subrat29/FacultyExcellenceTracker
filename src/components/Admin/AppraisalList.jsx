@@ -71,12 +71,12 @@ const AppraisalList = () => {
         mobile: true,
       },
       {
-        Header: 'AI Performance Score',
+        Header: 'Appraisal Score',
         accessor: 'performanceScore',
         mobile: false,
       },
       {
-        Header: 'AI Recommendation',
+        Header: 'Promotion Recommendation',
         accessor: 'recommendation',
         mobile: false,
       },

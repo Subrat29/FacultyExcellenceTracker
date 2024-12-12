@@ -22,7 +22,7 @@ const Stats = () => {
         { name: 'Dr. Alice', rank: 1, performanceScore: 95, points: 1200, badges: ['Star Faculty', 'Top Researcher'] },
         { name: 'Dr. Bob', rank: 2, performanceScore: 90, points: 1100, badges: ['Top Educator'] },
         { name: 'Dr. Charlie', rank: 3, performanceScore: 88, points: 1050, badges: ['Star Faculty'] },
-        { name: 'Dr. David', rank: 4, performanceScore: 85, points: 950, badges: [] },
+        { name: 'Dr. David', rank: 4, performanceScore: 85, points: 950, badges: ['Top Researcher'] },
         { name: 'Dr. Eva', rank: 5, performanceScore: 80, points: 900, badges: ['Top Researcher'] },
     ];
 
@@ -33,7 +33,7 @@ const Stats = () => {
         { Header: 'Rank', accessor: 'rank' },
         { Header: 'Faculty Name', accessor: 'name' },
         { Header: 'Performance Score', accessor: 'performanceScore' },
-        { Header: 'Points', accessor: 'points' },
+        // { Header: 'Points', accessor: 'points' },
         { Header: 'Badges', accessor: 'badges', Cell: ({ value }) => value.join(', ') },
     ], []);
 
