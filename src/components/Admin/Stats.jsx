@@ -96,7 +96,7 @@ const Stats = () => {
             </div>
 
             {/* Faculty Leaderboard */}
-            <div className="mb-6">
+            <div className='overflow-scroll'><div className="mb-6">
                 <table {...getTableProps()} className="min-w-full border-collapse border border-gray-200 mb-4 bg-white rounded-lg shadow-md">
                     <thead className="bg-gray-100">
                         {headerGroups.map(headerGroup => (
@@ -128,7 +128,8 @@ const Stats = () => {
                         })}
                     </tbody>
                 </table>
-            </div>
+            </div></div>
+            
 
             {/* Bar Chart for Faculty Performance Overview */}
             <div className="mb-6" style={{ height: '300px' }}>
@@ -154,7 +155,7 @@ const Stats = () => {
             </div>
 
             {/* Pie Chart for Badges Distribution */}
-            <div className="mb-6" style={{ height: '300px' }}>
+            <div className="mb-6 mt-10" style={{ height: '300px' }}>
                 <h3 className="text-xl font-bold mb-2">Badges Distribution</h3>
                 <Pie
                     data={pieChartData}

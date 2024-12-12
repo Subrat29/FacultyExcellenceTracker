@@ -86,7 +86,7 @@ const AdminHeader = () => {
             <option value="2021-22">2021-22</option>
           </select>
 
-          <select
+          {/* <select
             value={selectedLanguage}
             onChange={handleLanguageChange}
             className="bg-white text-gray-700 py-2 px-4 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full sm:w-auto"
@@ -94,7 +94,7 @@ const AdminHeader = () => {
             <option value="English">English</option>
             <option value="Hindi">Hindi</option>
             <option value="Tamil">Tamil</option>
-          </select>
+          </select> */}
         </div>
 
         {/* Settings Button */}
@@ -132,7 +132,7 @@ const AdminHeader = () => {
       </div>
 
       <div className="px-3 py-1 text-white font-medium rounded-lg bg-blue-500 shadow-sm sm:hidden">
-        2024-2024
+        2023-2024
       </div>
 
       <div
