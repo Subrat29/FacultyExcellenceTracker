@@ -95,6 +95,8 @@ const AppRoutes = ({ status, user, role }) => {
 
   return (
     <Routes>
+      {/* Landing Page */}
+      <Route path="/" element={<Landing />} />
       {/* Root Route - Redirect based on authentication status */}
       <Route
         path="/"
