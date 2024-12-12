@@ -143,12 +143,12 @@ const DashboardPage = () => {
             ? 'Add New Faculty'
             : 'Add New Admin or Faculty'}
         </button>
-        <button className="bg-blue-500 text-white p-3 rounded-lg hover:bg-blue-600 flex-1 md:flex-none md:w-auto">
+        {/* <button className="bg-blue-500 text-white p-3 rounded-lg hover:bg-blue-600 flex-1 md:flex-none md:w-auto">
           Generate Reports
         </button>
         <button className="bg-yellow-500 text-white p-3 rounded-lg hover:bg-yellow-600 flex-1 md:flex-none md:w-auto">
           Schedule Meeting
-        </button>
+        </button> */}
       </div>
 
       {modalOpen && (
