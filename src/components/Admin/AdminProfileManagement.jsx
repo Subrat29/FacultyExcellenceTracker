@@ -6,15 +6,29 @@ import AddCollege from './AddCollege';
 import AddDepartment from './AddDepartment';
 
 const AdminProfileManagement = () => {
-  const [activeTab, setActiveTab] = useState('tab1');
 
-  const tabs = [
-    { id: 'tab1', label: 'Profile' },
-    { id: 'tab2', label: 'Add Session' },
-    { id: 'tab3', label: 'Add University' },
-    { id: 'tab4', label: 'Add College' },
-    { id: 'tab5', label: 'Add Department' },
-  ];
+  const [activeTab, setActiveTab] = useState('tab1');
+  const role = localStorage.getItem("roleType"); 
+  const roleType = role ? role.trim().toLowerCase() : ""; 
+
+  const tabs = [{ id: 'tab1', label: 'Profile' }];
+
+    if (roleType === "university admin") {
+    // University admin can access all tabs
+       tabs.push(
+      { id: 'tab2', label: 'Add Session' },
+      { id: 'tab3', label: 'Add University' },
+      { id: 'tab4', label: 'Add College' },
+      { id: 'tab5', label: 'Add Department' }
+      );
+    } else if (roleType === "department admin") {
+     tabs.push(
+      // { id: 'tab5', label: 'Add Department' }
+    );
+    } else if (roleType === "college admin") {
+    // College admin can access Add Department only
+    tabs.push({ id: 'tab5', label: 'Add Department' });
+   }
 
   const tabContent = {
     tab1: <AdminProfile/>,
@@ -26,7 +40,7 @@ const AdminProfileManagement = () => {
 
   return (
     <div>
-          <div className="max-w-4xl mx-auto mt-12 lg:mt-3 bg-blue-300   sm:p-4 rounded-lg shadow-lg">
+        <div className="max-w-4xl mx-auto mt-12 lg:mt-3 bg-blue-300   sm:p-4 rounded-lg shadow-lg">
       {/* Tabs */}
       <div
         className="grid gap-2 lg:justify-center sm:flex sm:items-center sm:space-x-4 bg-white rounded-t-lg p-2"
