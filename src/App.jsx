@@ -12,6 +12,7 @@ import { Toaster } from 'react-hot-toast';
 
 // Lazy load pages for better performance
 const LoginPage = React.lazy(() => import('./pages/LoginPage'));
+const Landing = React.lazy(() => import('./pages/LandingPage'));
 const RegisterPage = React.lazy(() => import('./pages/RegisterPage'));
 const FacultyDashboardPage = React.lazy(() =>
   import('./pages/FacultyDashboardPage')
@@ -112,10 +113,11 @@ const AppRoutes = ({ status, user, role }) => {
               replace
             />
           ) : (
-            <Navigate to="/login" replace />
+            <Navigate to="/" replace />
           )
         }
       />
+
       {/* Public Routes */}
       <Route
         path="/login"
