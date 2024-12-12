@@ -70,6 +70,7 @@ const AppRoutes = ({ status, role }) => {
       {/* Landing Page (Public Page) */}
       <Route path="/" element={<Landing />} />
 
+
       {/* Login Route */}
       <Route
         path="/login"
