@@ -111,7 +111,7 @@ const Login = () => {
       <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
       <h2 className="text-lg font-bold">Hackathon Credentials</h2>
             <p>Faculty: subratyadav29@gmail.com, 111</p>
-            <p>Admin: anujdummy02@gmail.com, subrat@12</p>
+            <p>Admin: anujdummy02@gmail.com, Subrat@12</p>
         <h2 className="text-2xl font-bold mb-6">Login</h2>
         {error && <div className="text-red-500 mb-4">{error}</div>}
         <form onSubmit={handleSubmit}>
