@@ -4,11 +4,11 @@ import { Bar, Pie } from 'react-chartjs-2';
 
 // Sample data for faculty leaderboard
 const facultyData = [
-  { name: 'Dr. Alice', rank: 1, performanceScore: 95, points: 1200, badges: ['Star Faculty', 'Top Researcher'] },
-  { name: 'Dr. Bob', rank: 2, performanceScore: 90, points: 1100, badges: ['Top Educator'] },
-  { name: 'Dr. Charlie', rank: 3, performanceScore: 88, points: 1050, badges: ['Star Faculty'] },
-  { name: 'Dr. Dana', rank: 4, performanceScore: 85, points: 980, badges: ['Mentorship Guru'] },
-  { name: 'Dr. Eva', rank: 5, performanceScore: 82, points: 950, badges: ['Top Researcher'] },
+  { name: 'Dr. Alice', rank: 1, profileScore: 95, points: 1200, badges: ['Star Faculty', 'Top Researcher'] },
+  { name: 'Dr. Bob', rank: 2, profileScore: 90, points: 1100, badges: ['Top Educator'] },
+  { name: 'Dr. Charlie', rank: 3, profileScore: 88, points: 1050, badges: ['Star Faculty'] },
+  { name: 'Dr. Dana', rank: 4, profileScore: 85, points: 980, badges: ['Mentorship Guru'] },
+  { name: 'Dr. Eva', rank: 5, profileScore: 82, points: 950, badges: ['Top Researcher'] },
 ];
 
 // ChartJS configuration for bar and pie charts
@@ -28,8 +28,8 @@ const FacultyLeaderboard = () => {
         accessor: 'name',
       },
       {
-        Header: 'Performance Score',
-        accessor: 'performanceScore',
+        Header: 'Profile Score',
+        accessor: 'profileScore',
       },
       {
         Header: 'Points',
