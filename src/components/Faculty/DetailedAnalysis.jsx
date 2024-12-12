@@ -112,13 +112,13 @@ const DetailedAnalysisWithCharts = () => {
       improvementAreas: 'None',
       suggestedActions: 'Continue mentorship activities',
     },
-    {
-      metric: 'Overall AI Score',
-      currentPerformance: '85',
-      aiAnalysis: 'Eligible for promotion',
-      improvementAreas: '-',
-      suggestedActions: 'Prepare for the next promotion cycle',
-    },
+    // {
+    //   metric: 'Overall AI Score',
+    //   currentPerformance: '85',
+    //   aiAnalysis: 'Eligible for promotion',
+    //   improvementAreas: '-',
+    //   suggestedActions: 'Prepare for the next promotion cycle',
+    // },
   ];
 
   const chartOptions = {
