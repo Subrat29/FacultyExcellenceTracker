@@ -632,43 +632,43 @@ function AcademicIDs() {
 
       // Use Promise.allSettled to handle multiple save operations concurrently
       const saveResults = await Promise.allSettled([
-        // handleSaveData(
-        //   'Publications',
-        //   orcidData,
-        //   '/v1/faculty/researchpublications/import'
-        // ),
-        // handleSaveData(
-        //   'Employment',
-        //   employmentData,
-        //   '/v1/faculty/experience/import'
-        // ),
-        // handleSaveData(
-        //   'Distinctions',
-        //   distinctionData,
-        //   '/v1/faculty/awards/import'
-        // ),
-        // handleSaveData(
-        //   'Memberships',
-        //   membershipData,
-        //   '/v1/faculty/professionalMembership/import'
-        // ),
+        handleSaveData(
+          'Publications',
+          orcidData,
+          '/v1/faculty/researchpublications/import'
+        ),
+        handleSaveData(
+          'Employment',
+          employmentData,
+          '/v1/faculty/experience/import'
+        ),
+        handleSaveData(
+          'Distinctions',
+          distinctionData,
+          '/v1/faculty/awards/import'
+        ),
+        handleSaveData(
+          'Memberships',
+          membershipData,
+          '/v1/faculty/professionalMembership/import'
+        ),
         // // handleSaveData('Services', serviceData, '/v1/faculty/services/import'),
-        // handleSaveData(
-        //   'Peer Reviews',
-        //   peerReviewData,
-        //   '/v1/faculty/peersfeedback/import'
-        // ),
+        handleSaveData(
+          'Peer Reviews',
+          peerReviewData,
+          '/v1/faculty/peersfeedback/import'
+        ),
         // handleSaveData('Fundings', fundingData, '/v1/faculty/projects/import'),
         // handleSaveData(
         //   'Invited Positions',
         //   invitedPositionData,
         //   '/v1/faculty/invitedpositions/import'
         // ),
-        // handleSaveData(
-        //   'Qualifications',
-        //   qualificationsData,
-        //   '/v1/faculty/qualifications/import'
-        // ),
+        handleSaveData(
+          'Qualifications',
+          qualificationsData,
+          '/v1/faculty/qualifications/import'
+        ),
       ]);
 
       // Handle the results
