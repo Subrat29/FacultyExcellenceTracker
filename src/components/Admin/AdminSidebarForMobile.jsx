@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   HomeIcon,
@@ -8,44 +8,59 @@ import {
 import { FaBars } from 'react-icons/fa';
 import { RxCross2 } from 'react-icons/rx';
 import { TfiPencilAlt } from 'react-icons/tfi';
-import { FaLock, FaSignOutAlt } from 'react-icons/fa'; // Import icons
+import { FaLock, FaSignOutAlt } from 'react-icons/fa';
 
 const AdminSidebar = () => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // State to manage sidebar visibility
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const navigate = useNavigate();
+  const sidebarRef = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (
+        sidebarRef.current && 
+        !sidebarRef.current.contains(event.target) &&
+        !event.target.closest('.sidebar-toggle')
+      ) {
+        setIsSidebarOpen(false);
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside);
+    
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   const handleLinkClick = () => {
-    setIsSidebarOpen(false); // Close the sidebar when a link is clicked
+    setIsSidebarOpen(false);
   };
 
   const handleLogout = () => {
-    // Remove tokens from localStorage
     console.log('Logout');
     localStorage.removeItem('accessToken');
     localStorage.removeItem('roleType');
     localStorage.removeItem('refreshToken');
     localStorage.removeItem('user');
 
-    // Optional: Remove tokens from cookies if they are set there too
     document.cookie =
       'accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/';
     document.cookie =
       'refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/';
 
-    // Redirect to login page after logout
     navigate('/');
   };
 
   const handleChangePassword = () => {
-    navigate('/change-password'); // Redirect to change-password page
-    setIsSidebarOpen(false); // Close the sidebar
+    navigate('/change-password');
+    setIsSidebarOpen(false);
   };
 
   return (
     <div className="relative h-screen">
-      {/* Sidebar Toggle Button (Visible only for small screens) */}
       <button
-        className="fixed top-3 z-50 px-4 py-2 rounded sm:hidden"
+        className="fixed top-3 z-50 px-4 py-2 rounded sm:hidden sidebar-toggle"
         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
       >
         {isSidebarOpen ? (
@@ -55,8 +70,8 @@ const AdminSidebar = () => {
         )}
       </button>
 
-      {/* Sidebar */}
       <div
+        ref={sidebarRef}
         className={`fixed inset-y-0 left-0 bg-gray-800 text-white w-60 transform ${
           isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
         } transition-transform duration-300 sm:relative sm:translate-x-0 sm:flex sm:flex-col`}
@@ -97,30 +112,19 @@ const AdminSidebar = () => {
             <DocumentSearchIcon className="w-5 h-5 mr-3" />
             Faculty Stats
           </Link>
-          <div className="ml-3">
-            <select
-              // value={selectedLanguage}
-              // onChange={handleLanguageChange}
-              className="bg-blue-500 text-white py-2 px-4 rounded-md"
-            >
-              <option value="English">English</option>
-              <option value="Spanish">Hindi</option>
-              <option value="French">Tamil</option>
-            </select>
-          </div>
         </nav>
         <button
           className="px-4 py-2 mt-4 mx-4 bg-blue-500 hover:bg-blue-400 rounded-md flex items-center"
           onClick={handleChangePassword}
         >
-          <FaLock className="mr-2" /> {/* Lock Icon for Change Password */}
+          <FaLock className="mr-2" />
           Change Password
         </button>
         <button
           className="px-4 py-2 mt-4 mx-4 bg-red-500 hover:bg-red-400 rounded-md flex items-center"
           onClick={handleLogout}
         >
-          <FaSignOutAlt className="mr-2" /> {/* Sign Out Icon for Logout */}
+          <FaSignOutAlt className="mr-2" />
           Logout
         </button>
       </div>

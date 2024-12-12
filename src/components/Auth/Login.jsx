@@ -15,6 +15,10 @@ const Login = () => {
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
   const [loading, setLoading] = useState(false); // State to track loading
+  const [modalOpen, setModalOpen] = useState(false);
+  const [oldPassword,setOldPassword] = useState('')
+  const [newPassword, setNewPassword] = useState('')
+  const [conformPassword,setConformPassword] = useState('')
 
   const handleRoleChange = (e) => {
     setRole(e.target.value);
@@ -76,6 +80,32 @@ const Login = () => {
     }
   };
 
+  const openModal = () => {
+    setModalOpen(true);
+  };
+  
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+  
+  const handlePasswordReset = async () => {
+    // if (!email) {
+    //   toast.error('Please enter your email.');
+    //   return;
+    // }
+
+    console.log({oldPassword,newPassword,conformPassword})
+  
+    try {
+      const response = await axiosInstance.post('/v1/user/forgot-password', { email });
+      toast.success('Password reset email sent!');
+      closeModal();
+    } catch (error) {
+      console.error('Error resetting password:', error);
+      toast.error('Failed to reset password.');
+    }
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-orange-100">
       <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
@@ -129,6 +159,9 @@ const Login = () => {
               {/* Disable checkbox if loading */}
               Remember me
             </label>
+            <Link onClick={()=>openModal()} className='text-blue-500 font-semibold hover:text-blue-600'> 
+                Forgot password
+            </Link>
             {/* <Link to="/register" className="text-blue-500 hover:underline">
               Register?
             </Link> */}
@@ -144,6 +177,59 @@ const Login = () => {
           </button>
         </form>
       </div>
+
+      
+      {modalOpen && (
+        <div className="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center p-4">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-full sm:w-2/3 md:w-1/2 lg:w-1/3">
+            <h3 className="text-lg font-bold mb-4">Forgot Password</h3>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter your email"
+              className="w-full p-2 border border-gray-300 rounded mb-4"
+            />
+            {/* <input
+              type="oldpassword"
+              value={oldPassword}
+              onChange={(e) => setOldPassword(e.target.value)}
+              placeholder="Enter your old password"
+              className="w-full p-2 border border-gray-300 rounded mb-4"
+            />
+
+            <input
+              type="newpassword"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+              placeholder="Enter new password"
+              className="w-full p-2 border border-gray-300 rounded mb-4"
+            />
+
+            <input
+              type="conformpassword"
+              value={conformPassword}
+              onChange={(e) => setConformPassword(e.target.value)}
+              placeholder="Conform password"
+              className="w-full p-2 border border-gray-300 rounded mb-4"
+            /> */}
+            <div className="flex justify-end space-x-2">
+              <button
+                onClick={closeModal}
+                className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handlePasswordReset}
+                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+              >
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

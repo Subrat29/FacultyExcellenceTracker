@@ -134,7 +134,7 @@ const DashboardPage = () => {
       </div>
 
       {/* Call-to-Action Buttons */}
-      <div className="flex-wrap flex justify-between gap-4 mt-6">
+      <div className="flex-wrap flex justify-between ml-96 gap-4 mt-6">
         <button
           onClick={openModal}
           className="bg-green-500 text-white p-3 rounded-lg hover:bg-green-600 flex-1 md:flex-none md:w-auto"
@@ -145,8 +145,8 @@ const DashboardPage = () => {
         </button>
         {/* <button className="bg-blue-500 text-white p-3 rounded-lg hover:bg-blue-600 flex-1 md:flex-none md:w-auto">
           Generate Reports
-        </button>
-        <button className="bg-yellow-500 text-white p-3 rounded-lg hover:bg-yellow-600 flex-1 md:flex-none md:w-auto">
+        </button> */}
+        {/* <button className="bg-yellow-500 text-white p-3 rounded-lg hover:bg-yellow-600 flex-1 md:flex-none md:w-auto">
           Schedule Meeting
         </button> */}
       </div>
