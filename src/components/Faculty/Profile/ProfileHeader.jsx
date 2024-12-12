@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Pencil } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const profileData = {
     name: "Prof. Subrat Kar",
@@ -11,6 +12,7 @@ const profileData = {
 function ProfileHeader() {
     const [profileImage, setProfileImage] = useState(profileData.image);
     const fileInputRef = useRef(null);
+    const navigate = useNavigate();
 
     const handleImageUpload = (event) => {
         const file = event.target.files[0];
@@ -28,6 +30,10 @@ function ProfileHeader() {
     const triggerFileInput = () => {
         fileInputRef.current.click();
     };
+
+    const handleChangePassword = () => {
+        navigate('/change-password'); // Redirect to change-password page
+      };
 
     return (
         <header className="bg-gradient-to-r from-slate-800 to-slate-700 text-white p-6 shadow-md flex items-center">
@@ -64,10 +70,12 @@ function ProfileHeader() {
                         <div className="text-3xl font-bold text-yellow-300">{profileData.vidwanScore}</div>
                     </div>
                     <div className="flex flex-col space-y-2">
-                        <button className="px-3 py-1.5 bg-blue-900 hover:bg-blue-700 rounded-md text-sm transition-colors">
+                        {/* <button className="px-3 py-1.5 bg-blue-900 hover:bg-blue-700 rounded-md text-sm transition-colors">
                             Download CV
-                        </button>
-                        <button className="px-3 py-1.5 bg-blue-900 hover:bg-blue-700 rounded-md text-sm transition-colors">
+                        </button> */}
+                        <button className="px-3 py-1.5 bg-blue-900 hover:bg-blue-700 rounded-md text-sm transition-colors"
+                        onClick={handleChangePassword}
+                        >
                             Reset Password
                         </button>
                     </div>

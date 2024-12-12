@@ -13,6 +13,9 @@ const LoginPage = () => {
           />
         </div>
         <div className=''>
+          {/* <h2 className="text-lg font-bold">Hackathon Credentials</h2>
+          <p>Faculty: subratyadav29@gmail.com, 111</p>
+          <p>Admin: anujdummy02@gmail.com, subrat@12</p> */}
           <Login />
         </div>
       </div>
