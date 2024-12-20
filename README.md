@@ -1,11 +1,11 @@
 # Faculty Excellence Tracker (FET) 🎓
 
-## Smart Education Solution for Faculty Career Advancement
+## Smart Education Solution for Faculty Career Advancement 🚀
 ![Project Status](https://img.shields.io/badge/Status-Active-brightgreen)
 ![Version](https://img.shields.io/badge/Version-1.0-blue)
 ![License](https://img.shields.io/badge/License-MIT-yellow)
 
-### Problem Statement Details
+### Problem Statement Details 📋
 - **ID**: 1613
 - **Title**: Automated System for Career Advancements of the Faculties of Higher Education
 - **Theme**: Smart Education
@@ -14,34 +14,34 @@
 - **Team Name**: Samdhan
 
 ## 📑 Table of Contents
-- [Overview](#overview)
-- [Key Features](#key-features)
-- [System Architecture](#system-architecture)
-- [Screenshots](#screenshots)
-- [Feasibility Analysis](#feasibility-analysis)
-- [Impact Assessment](#impact-assessment)
-- [Benefits](#benefits)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Contact](#contact)
+- [Overview](#overview) 🎯
+- [Key Features](#key-features) ⭐
+- [System Architecture](#system-architecture) 🏗️
+- [Screenshots](#screenshots) 📸
+- [Feasibility Analysis](#feasibility-analysis) 📊
+- [Impact Assessment](#impact-assessment) 💫
+- [Benefits](#benefits) 🎁
+- [Installation](#installation) 🔧
+- [Usage](#usage) 📖
+- [Contact](#contact) 📞
 
-## Overview
-FET revolutionizes faculty career advancement in higher education through AI-driven analytics and automated appraisal systems. Our platform streamlines the evaluation process while promoting continuous professional growth through data-driven insights and engagement features.
+## Overview 🎯
+FET revolutionizes faculty career advancement in higher education through formula-based analytics and automated appraisal systems. Our platform streamlines the evaluation process while promoting continuous professional growth through data-driven insights and engagement features.
 
-## Key Features
+## Key Features ⭐
 
 ### 📝 Self-Appraisal Management
 - Intuitive form submission interface
 - Comprehensive evaluation criteria
 - Automated validation and processing
 
-### 🎯 Advanced Analytics
-- AI-powered performance analysis
-- Predictive career progression modeling
-- Personalized improvement recommendations
+### 🎯 Formula-Based Analytics
+- Performance analysis based on predefined criteria
+- Career progression evaluation using standardized formulas
+- Rule-based improvement recommendations
 
-### 📊 Data Integration
-- ORCID profile synchronization
+### 📊 Data Integration 
+- ORCID profile synchronization 
 - CSV data import capability
 - Seamless integration with university systems (LMS, HR, Research databases)
 
@@ -55,7 +55,7 @@ FET revolutionizes faculty career advancement in higher education through AI-dri
 - Trend analysis
 - Comparative analytics
 
-## System Architecture
+## System Architecture 🏗️
 
 ### Complete FET System Flow
 ```mermaid
@@ -71,20 +71,20 @@ graph TD
     D --> J[System Analytics]
 ```
 
-### Appraisal System Flow
+### Appraisal System Flow 📋
 ```mermaid
 graph TD
     A[Start Appraisal] --> B[Data Collection]
-    B --> C[AI Analysis]
+    B --> C[Formula-Based Analysis]
     C --> D[Score Generation]
     D --> E[Recommendations]
     E --> F[Admin Review]
     F --> G[Final Decision]
 ```
 
-## Screenshots
+## Screenshots 📸
 
-### Admin Interface
+### Admin Interface 👨‍💼
 1. **Admin Dashboard**
    ![Admin Dashboard](/screenshots/admin-dashboard.png)
    *Comprehensive overview of system metrics and faculty statistics*
@@ -97,7 +97,7 @@ graph TD
    ![Faculty Stats](/screenshots/faculty-stats.png)
    *Detailed analytics and performance metrics visualization*
 
-### Faculty Interface
+### Faculty Interface 👩‍🏫
 1. **Faculty Dashboard**
    ![Faculty Dashboard](/screenshots/faculty-dashboard.png)
    *Personalized overview of performance and achievements*
@@ -114,41 +114,41 @@ graph TD
    ![Leaderboard](/screenshots/leaderboard.png)
    *Gamified ranking system showcasing achievements*
 
-## Feasibility Analysis
+## Feasibility Analysis 📊
 
-### Technical Feasibility
+### Technical Feasibility 💻
 - Built on robust cloud infrastructure
-- Leverages modern AI/ML technologies
+- Uses established evaluation formulas
 - Seamless integration capabilities
 - Scalable architecture
 
-### Operational Feasibility
+### Operational Feasibility 🔄
 - Intuitive user interface
 - Comprehensive onboarding support
 - Regular maintenance and updates
 - Strong technical support system
 
-### Financial Feasibility
+### Financial Feasibility 💰
 - Freemium business model
 - Scalable revenue streams
 - Cost-effective implementation
 - Clear ROI for institutions
 
-## Impact Assessment
+## Impact Assessment 💫
 
-### Faculty Benefits
-- Data-driven career progression
+### Faculty Benefits 👨‍🏫
+- Formula-based career progression
 - Transparent evaluation system
 - Continuous professional development
 - Enhanced engagement through gamification
 
-### Administrative Benefits
+### Administrative Benefits 👔
 - Streamlined decision-making
 - Reduced paperwork
 - Improved resource allocation
 - Enhanced institutional quality metrics
 
-## Benefits
+## Benefits 🎁
 
 ### 🌍 Social Impact
 - Promotes academic excellence
@@ -168,7 +168,7 @@ graph TD
 - Sustainable practices
 - Digital-first approach
 
-## Installation
+## Installation 🔧
 
 ```bash
 # Clone the repository
@@ -184,21 +184,21 @@ cp .env.example .env
 npm start
 ```
 
-## Usage
+## Usage 📖
 
-1. Register your institution
-2. Set up administrator accounts
-3. Import faculty data
-4. Configure evaluation parameters
-5. Begin using the system
+1. Register your institution 🏫
+2. Set up administrator accounts 👤
+3. Import faculty data 📥
+4. Configure evaluation parameters ⚙️
+5. Begin using the system ▶️
 
-## Contact
+## Contact 📞
 
 For support or queries, reach out to us:
-- Email: support@fet.edu
-- Website: www.fet.edu
-- GitHub: github.com/FET
+- Email: ✉️ [support@fet.edu](subratyadav29@gmail.com)
+- Website: 🌐 [www.fet.edu](https://faculty-excellence-tracker.vercel.app/)
+- GitHub: 💻 [github.com/FET](https://github.com/Subrat29/FacultyExcellenceTracker)
 
 ---
 
-© 2024 Faculty Excellence Tracker. All rights reserved.
+© 2024 Faculty Excellence Tracker. All rights reserved. ✨
