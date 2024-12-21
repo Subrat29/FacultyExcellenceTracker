@@ -221,10 +221,16 @@ npm start
 
 For support or queries, reach out to us:
 
-- Email: ✉️ [support@fet.edu](subratyadav29@gmail.com)
+- Email: ✉️ [support@fet.edu](mailto:subratyadav29@gmail.com)
 - Website: 🌐 [www.fet.edu](https://faculty-excellence-tracker.vercel.app/)
 - GitHub: 💻 [github.com/FET](https://github.com/Subrat29/FacultyExcellenceTracker)
 
 ---
 
-© 2024 Faculty Excellence Tracker. All rights reserved. ✨
+<p align="center">
+  <strong>© 2024 Faculty Excellence Tracker. All rights reserved. ✨</strong>
+</p>
+
+<p align="center">
+  <strong>Made with ❤️ by Team Samdhan 🚀</strong>
+</p>
