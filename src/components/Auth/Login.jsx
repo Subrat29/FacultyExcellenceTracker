@@ -110,7 +110,7 @@ const Login = () => {
     <div className="min-h-screen flex items-center justify-center bg-orange-100">
       <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
         <div className="bg-blue-100 p-4 rounded-md border border-blue-300 mb-6">
-          <h2 className="text-lg font-bold text-blue-600">Hackathon Credentials</h2>
+          <h2 className="text-lg font-bold text-blue-600">Login Credentials</h2>
           <p className="text-gray-700 mt-2">
             <span className="font-semibold">Faculty:</span> subratyadav29@gmail.com, P-111
           </p>
