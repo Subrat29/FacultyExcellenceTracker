@@ -6,23 +6,18 @@ import {
   UserIcon,
   ChartBarIcon,
   GiftIcon,
-  PuzzleIcon,
-  UsersIcon,
-  BriefcaseIcon,
-  ClockIcon,
   DocumentIcon,
-  // TrophyIcon
 } from '@heroicons/react/outline';
 
 import { FaTrophy } from 'react-icons/fa';
 
 export default function Sidebar() {
   return (
-    <div className="bg-gray-800 text-white p-6 h-screen">
+    <div className="bg-gray-800 text-white p-6 min-h-screen h-full sticky top-0">
       <div className="text-2xl font-bold mb-6 border-b border-gray-700 pb-2">
         Faculty Dashboard
       </div>
-      <ul className='flex-1 space-y-4'>
+      <ul className="flex-1 space-y-4">
         <li>
           <Link to="/faculty-dashboard" className="flex items-center p-3 rounded hover:bg-gray-700 transition duration-200">
             <HomeIcon className="w-6 h-6 mr-3" />
@@ -54,6 +49,18 @@ export default function Sidebar() {
             Performance Chart
           </Link>
         </li>
+        <li>
+          <Link to="/faculty-dashboard/leaderboard" className="flex items-center p-3 rounded hover:bg-gray-700 transition duration-200">
+            <FaTrophy className="w-6 h-6 mr-3" />
+            Leaderboard
+          </Link>
+        </li>
+        <li>
+          <Link to="/faculty-dashboard/incentives" className="flex items-center p-3 rounded hover:bg-gray-700 transition duration-200">
+            <GiftIcon className="w-6 h-6 mr-3" />
+            Incentives
+          </Link>
+        </li>
         {/* <li>
           <Link to="/faculty-dashboard/integration" className="flex items-center p-3 rounded hover:bg-gray-700 transition duration-200">
             <PuzzleIcon className="w-6 h-6 mr-3" />
@@ -72,20 +79,6 @@ export default function Sidebar() {
             Career Path
           </Link>
         </li> */}
-        
-        <li>
-          <Link to="/faculty-dashboard/leaderboard" className="flex items-center p-3 rounded hover:bg-gray-700 transition duration-200">
-            {/* <TrophyIcon className="w-6 h-6 mr-3" /> */}
-            <FaTrophy  className="w-6 h-6 mr-3" />
-            Leaderboard
-          </Link>
-        </li>
-        <li>
-          <Link to="/faculty-dashboard/incentives" className="flex items-center p-3 rounded hover:bg-gray-700 transition duration-200">
-            <GiftIcon className="w-6 h-6 mr-3" />
-            Incentives
-          </Link>
-        </li>
       </ul>
     </div>
   );
