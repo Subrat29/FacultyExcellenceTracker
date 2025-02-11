@@ -112,10 +112,10 @@ const Login = () => {
         <div className="bg-blue-100 p-4 rounded-md border border-blue-300 mb-6">
           <h2 className="text-lg font-bold text-blue-600">Login Credentials</h2>
           <p className="text-gray-700 mt-2">
-            <span className="font-semibold">Faculty:</span> subratyadav29@gmail.com, P-111
+            <span className="font-semibold">Faculty:</span> faculty@fet.com, Faculty@123
           </p>
           <p className="text-gray-700 mt-1">
-            <span className="font-semibold">Admin:</span> anujdummy02@gmail.com, P-Subrat@12
+            <span className="font-semibold">Admin:</span> universityadmin@fet.com, Admin@123
           </p>
         </div>
         
